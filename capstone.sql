@@ -1,5 +1,34 @@
 USE CapstoneDB;
 
+CREATE TABLE user (
+	createdAt DATETIME,
+    updatedAt DATETIME,
+    id INT,
+	emailAddress VARCHAR(100),
+    password VARCHAR(50),
+    fullName VARCHAR(150),
+    isSuperAdmin BOOLEAN,
+    passwordResetToken VARCHAR(100),
+    passwordResetTokenExpiresAt VARCHAR(100),
+    stripeCustomerId VARCHAR (100),
+    hasBillingCard BOOLEAN,
+    billingCardBrand VARCHAR (100),
+    billingCardLast4 VARCHAR (100),
+    billingCardExpMonth VARCHAR (100),
+    billingCardExpYear VARCHAR (100),
+    emailProofToken VARCHAR(100),
+    emailProofTokenExpiresAt VARCHAR(100),
+    emailStatus BOOLEAN,
+    emailChangeCandidate VARCHAR(100),
+    tosAcceptedByIp VARCHAR(100),
+    lastSeenAt DATETIME,
+    PRIMARY KEY (id)
+);
+SELECT * FROM user;
+INSERT INTO user VALUES ('2018-06-10 10:30:59', '2018-06-18 10:30:59', '101010', 'nuhsadmin@nuhs.com','nuhs123', 'Dr Dale Loh',
+TRUE,'','','',FALSE,'','','','','','',TRUE,'','','2018-06-10 10:30:59');
+DROP TABLE user;
+
 CREATE TABLE patients (
 	nric VARCHAR(15),
     firstName VARCHAR(100),
@@ -320,6 +349,8 @@ CREATE TABLE cases(
 
 INSERT INTO cases VALUES('10001','S9811714J','0987654321','2018-04-18','36.8', '100','50','100','Normal','Normal','Normal','Normal','Patient is in pain',TRUE,'2018-04-28 10:30:59','123456789','2018-06-18 10:30:59');
 INSERT INTO cases VALUES(NULL,'S9911821P','0897564312','2018-04-20','37.8', '110','70','90','Normal','Abnormal','Normal','Normal','Patient complains of chest pain',TRUE,'2018-04-28 10:30:59','123456789','2018-06-18 11:30:59');
+INSERT INTO cases VALUES(NULL,'S9512721E','0897564312','2018-05-20','38.8', '110','70','90','Normal','Abnormal','Normal','Normal','Patient had been experiencing condition since he returned from camp',TRUE,'2018-04-18 10:30:59','123456789','2018-05-19 11:30:59');
+
 
 SELECT * FROM cases;
 
@@ -341,6 +372,14 @@ INSERT INTO caseSymptom VALUES('10002','25');
 INSERT INTO caseSymptom VALUES('10002','26');
 INSERT INTO caseSymptom VALUES('10002','27');
 
+INSERT INTO caseSymptom VALUES('10003','38');
+INSERT INTO caseSymptom VALUES('10003','41');
+INSERT INTO caseSymptom VALUES('10003','43');
+INSERT INTO caseSymptom VALUES('10003','46');
+INSERT INTO caseSymptom VALUES('10003','47');
+
+
+
 SELECT * FROM caseSymptom;
 
 
@@ -353,6 +392,10 @@ CREATE TABLE caseSign(
 INSERT INTO caseSign VALUES('10001','2');
 INSERT INTO caseSign VALUES('10001','3');
 INSERT INTO caseSign VALUES('10002','12');
+INSERT INTO caseSign VALUES('10003','13');
+INSERT INTO caseSign VALUES('10003','14');
+
+
 SELECT * FROM caseSign;
 
 
@@ -366,6 +409,8 @@ CREATE TABLE caseGP(
 INSERT INTO caseGP VALUES('10001','0987654321');
 INSERT INTO caseGP VALUES('10001','0987654321');
 INSERT INTO caseGP VALUES('10002','0897564312');
+INSERT INTO caseGP VALUES('10003','0897564312');
+
 SELECT * FROM caseGP;
 
 CREATE TABLE caseConsultant(
@@ -377,13 +422,19 @@ CREATE TABLE caseConsultant(
 INSERT INTO caseConsultant VALUES('10001','123456789');
 INSERT INTO caseConsultant VALUES('10001','123456789');
 INSERT INTO caseConsultant VALUES('10002','123456789');
+INSERT INTO caseConsultant VALUES('10003','123456789');
+
 SELECT * FROM caseConsultant;
+
+
+
 
 -- Query for each case
 
 SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fbz, cases.ptt, cases.uCER, cases.lft, 
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
-cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,(SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
+cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,
+(SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
 FROM cases
 LEFT JOIN caseSymptom csyp
 ON cases.caseId=csyp.caseId
@@ -407,7 +458,8 @@ GROUP BY cases.caseId ORDER BY Score DESC;
 
 SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fbz, cases.ptt, cases.uCER, cases.lft,
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
-cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,(SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
+cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,
+(SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
 FROM cases
 LEFT JOIN caseSymptom csyp
 ON cases.caseId=csyp.caseId
