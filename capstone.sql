@@ -25,7 +25,7 @@ CREATE TABLE user (
     PRIMARY KEY (id)
 );
 SELECT * FROM user;
-INSERT INTO user VALUES ('2018-06-10 10:30:59', '2018-06-18 10:30:59', '101010', 'nuhsadmin@nuhs.com','nuhs123', 'Dr Dale Loh',
+INSERT INTO user VALUES ('2018-06-10 10:30:59', '2018-06-18 10:30:59', '101010', 'nuhsadmin@nuhs.com',MD5('nuhs123'), 'Dr Dale Loh',
 TRUE,'','','',FALSE,'','','','','','',TRUE,'','','2018-06-10 10:30:59');
 DROP TABLE user;
 
@@ -33,18 +33,20 @@ CREATE TABLE patients (
 	nric VARCHAR(15),
     firstName VARCHAR(100),
     lastName VARCHAR(100),
-    DOB DATE,
+    DOB DATETIME,
     allergies VARCHAR(150),
     medicalHistory VARCHAR(150),
 	gender CHAR(1) CHECK (gender="F" or gender="M"),
     status CHAR(50) CHECK (status="local" OR status="overseas"),
     PRIMARY KEY (nric)
 );
+SELECT * FROM patients WHERE patients.nric = 'S9811714J' AND patients.DOB = '1998-05-05 13:09:11';
 SELECT * FROM patients;
 
-INSERT INTO patients VALUES ('S9811714J', 'John', 'Tan','1998-05-05','Penicillin','patient had been hospitalise for asthma attack','M',  'local');
-INSERT INTO patients VALUES ('S9911821P', 'James', 'Tan','1999-08-05','Penicillin',NULL,'M',  'local');
-INSERT INTO patients VALUES ('S9512721E', 'Jacob', 'Tan','1995-09-05','Penicillin','patient had history of asthma','M',  'local');
+
+INSERT INTO patients VALUES ('S9811714J', 'John', 'Tan','1998-05-05 13:09:11','Penicillin','patient had been hospitalise for asthma attack','M',  'local');
+INSERT INTO patients VALUES ('S9911821P', 'James', 'Tan','1999-08-05 13:09:11','Penicillin',NULL,'M',  'local');
+INSERT INTO patients VALUES ('S9512721E', 'Jacob', 'Tan','1995-09-05 13:09:11','Penicillin','patient had history of asthma','M',  'local');
 
 -- DELIMITER $$
 -- CREATE DEFINER = 'root'@'localhost' PROCEDURE `sp_pat_get`(v_nric VARCHAR(15))
@@ -135,6 +137,7 @@ INSERT INTO gps VALUES ('0987654321', 'Matt', 'Tan','NUH','matttan@nuh.sg','matt
 INSERT INTO gps VALUES ('0897564312', 'Alan', 'Tan','NUH','alantan@nuh.sg','alantan',  '90909091');
 
 SELECT * FROM gps;
+SELECT * FROM gps WHERE email = 'alantan@nuh.sg' AND password = 'alantan';
 
 
 CREATE TABLE consultants (
@@ -149,8 +152,10 @@ CREATE TABLE consultants (
 	PRIMARY KEY(licenceIdConsultant)
 );
 
-INSERT INTO consultants VALUES ('123456789', 'Matt', 'Tan','NUH','matttan@nuh.sg','matttan',  '90909090',TRUE);
+INSERT INTO consultants VALUES ('123456789', 'Kevin', 'Tan','NUH','kevintan@nuh.sg','kevintan',  '90900088',TRUE);
 SELECT * FROM consultants;
+SELECT * FROM consultants WHERE consultants.email = 'matttan@nuh.sg' AND consultants.password = 'matttan';
+
 
 
 CREATE TABLE register (
@@ -260,6 +265,40 @@ INSERT INTO signs VALUES (NULL,'Power - Abnormal','Neurology','3');
 INSERT INTO signs VALUES (NULL,'Reflex - Abnormal','Neurology','1');
 
 
+-- PICTURES (DOUBLE CONFIRM THE SCORE)
+INSERT INTO signs VALUES (NULL,'R1','Respiratory','1');
+INSERT INTO signs VALUES (NULL,'R2','Respiratory','1');
+INSERT INTO signs VALUES (NULL,'R3','Respiratory','1');
+INSERT INTO signs VALUES (NULL,'R4','Respiratory','1');
+
+INSERT INTO signs VALUES (NULL,'G1','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G2','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G3','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G4','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G5','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G6','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G7','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G8','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'G9','Gastrointestinal','1');
+
+INSERT INTO signs VALUES (NULL,'UF1','Urinary','1');
+INSERT INTO signs VALUES (NULL,'UF2','Urinary','1');
+INSERT INTO signs VALUES (NULL,'UF3','Urinary','1');
+INSERT INTO signs VALUES (NULL,'UF4','Urinary','1');
+INSERT INTO signs VALUES (NULL,'UM1','Urinary','1');
+INSERT INTO signs VALUES (NULL,'UM2','Urinary','1');
+INSERT INTO signs VALUES (NULL,'UM3','Urinary','1');
+INSERT INTO signs VALUES (NULL,'UM4','Urinary','1');
+
+INSERT INTO signs VALUES (NULL,'N1','Neurology','1');
+INSERT INTO signs VALUES (NULL,'N2','Neurology','1');
+INSERT INTO signs VALUES (NULL,'N3','Neurology','1');
+INSERT INTO signs VALUES (NULL,'N4','Neurology','1');
+INSERT INTO signs VALUES (NULL,'N5','Neurology','1');
+INSERT INTO signs VALUES (NULL,'N6','Neurology','1');
+INSERT INTO signs VALUES (NULL,'N7','Neurology','1');
+
+
 
 
 SELECT * FROM signs;
@@ -332,10 +371,10 @@ CREATE TABLE cases(
     systole int,
     diastole int,
     bp int,
-    fbz CHAR(50) CHECK (fbz ="Normal" OR fbz ="Abnormal" OR fbz ="NA"),
+    fullBloodCount CHAR(50) CHECK (fbz ="Normal" OR fbz ="Abnormal" OR fbz ="NA"),
 	ptt CHAR(50) CHECK (ptt ="Normal" OR ptt ="Abnormal" OR ptt ="NA"),
-    uCER CHAR(50) CHECK (uCER ="Normal" OR uCER ="Abnormal" OR uCER ="NA"),
-    lft CHAR(50) CHECK (lft ="Normal" OR lft ="Abnormal" OR lft ="NA"),
+    UECr CHAR(50) CHECK (uCER ="Normal" OR uCER ="Abnormal" OR uCER ="NA"),
+    liverFunctionTest CHAR(50) CHECK (lft ="Normal" OR lft ="Abnormal" OR lft ="NA"),
     additionalInfo VARCHAR(200),
 	assigned BOOLEAN,
 	assignedTime DATETIME,
@@ -399,6 +438,20 @@ INSERT INTO caseSign VALUES('10003','14');
 SELECT * FROM caseSign;
 
 
+CREATE TABLE casePatient(
+	caseId INT,
+    nric VARCHAR(15),
+	FOREIGN KEY(caseId) REFERENCES cases(caseId),
+	FOREIGN KEY(nric) REFERENCES patients(nric)
+);
+SELECT * FROM casePatient;
+
+INSERT INTO casePatient VALUES('10001','S9811714J');
+INSERT INTO casePatient VALUES('10002','S9911821P');
+INSERT INTO casePatient VALUES('10003','S9512721E');
+
+
+
 
 CREATE TABLE caseGP(
 	caseId INT,
@@ -431,7 +484,7 @@ SELECT * FROM caseConsultant;
 
 -- Query for each case
 
-SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fbz, cases.ptt, cases.uCER, cases.lft, 
+SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fullBloodCount, cases.ptt, cases.UECr, cases.liverFunctionTest, 
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
 cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,
 (SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
@@ -444,6 +497,10 @@ LEFT JOIN caseSign csig
 ON cases.caseId=csig.caseId
 LEFT JOIN signs 
 ON csig.signId=signs.signId
+LEFT JOIN casePatient pat
+ON cases.caseId=pat.caseId
+LEFT JOIN patients
+ON pat.nric=patients.nric
 LEFT JOIN caseGP cgp
 ON cases.caseId=cgp.caseId
 LEFT JOIN gps 
@@ -455,10 +512,15 @@ ON cc.licenceIdConsultant=consultants.licenceIdConsultant
 GROUP BY cases.caseId ORDER BY Score DESC;
 
 -- Query by patients
+-- Error Code: 1055. Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 
+-- 'capstonedb.consultants.firstName' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
 
-SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fbz, cases.ptt, cases.uCER, cases.lft,
+-- 
+
+SELECT cases.caseId, GROUP_CONCAT(DISTINCT gps.firstName, ' ', gps.lastName)GP, GROUP_CONCAT(DISTINCT gps.organisation)organisation, GROUP_CONCAT(DISTINCT gps.email)email, GROUP_CONCAT(DISTINCT gps.number)phonenumber, 
+cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fullBloodCount, cases.ptt, cases.UECr, cases.liverFunctionTest, 
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
-cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,
+cases.additionalInfo, GROUP_CONCAT(DISTINCT consultants.firstName, ' ',consultants.lastName)Consultant, cases.assigned, cases.appointmentTime,
 (SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
 FROM cases
 LEFT JOIN caseSymptom csyp
@@ -481,7 +543,7 @@ WHERE nric='S9811714J'
 GROUP BY cases.caseId;
 
 -- Query by consultant
-SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fbz, cases.ptt, cases.uCER, cases.lft,
+SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fullBloodCount, cases.ptt, cases.UECr, cases.liverFunctionTest, 
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
 cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,(SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
 FROM cases
@@ -512,7 +574,7 @@ delimiter $$
 CREATE PROCEDURE query_cases()
 BEGIN 
 CREATE TEMPORARY TABLE querycasestbl 
-SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fbz, cases.ptt, cases.uCER, cases.lft, 
+SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fullBloodCount, cases.ptt, cases.UECr, cases.liverFunctionTest, 
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
 cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,(SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
 FROM cases
@@ -551,7 +613,7 @@ delimiter $$
 CREATE PROCEDURE query_consultant()
 BEGIN 
 CREATE TEMPORARY TABLE queryconsultanttbl 
-SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fbz, cases.ptt, cases.uCER, cases.lft,
+SELECT cases.caseId, cases.nric, cases.temperature, cases.systole, cases.diastole, cases.bp, ccases.fullBloodCount, cases.ptt, cases.UECr, cases.liverFunctionTest, 
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
 cases.additionalInfo, cases.licenceIdGP,cases.licenceIdConsultant, cases.assigned, cases.appointmentTime,(SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))Score
 FROM cases
@@ -643,6 +705,7 @@ DROP TABLE consultants;
 DROP TABLE cases;
 DROP TABLE caseSymptom;
 DROP TABLE caseSign;
+DROP TABLE casePatient;
 DROP TABLE caseGP;
 DROP TABLE caseConsultant;
 DROP TABLE symptoms;

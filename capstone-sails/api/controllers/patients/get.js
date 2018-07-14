@@ -34,7 +34,8 @@ module.exports = {
     notFound: {
       description: 'No user with the specified ID was found in the database.',
       responseType: 'notFound'
-    }
+    },
+
 
   },
 
@@ -58,17 +59,43 @@ module.exports = {
       // var rawTable = await sails.sendNativeQuery(consultantstable);
       // return exits.success(rawTable.rows);
 
+      var _ =require('lodash');
 
       const { nric, DOB } = inputs;
+      sails.log(nric, DOB);
+      const PATIENTS_GET = 'select * from patients WHERE nric = \'' + nric +'\' AND DOB = \''+ DOB + '\'' ;
+      const rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
 
-      var PATIENTS_GET = 'select * from patients WHERE nric = ' + nric +' AND DOB = '+ DOB + ';';
-      var rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
+      const PATIENTS_CASES = 'call query_case()';
+      const PATIENTS_QUERY_CASES = 'select * from querycasetbl WHERE nric=\'' + nric + '\'';
+      const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
+      //sails.log(rawPatientCases);
+      const rawQueryPatientCases = await sails.sendNativeQuery(PATIENTS_QUERY_CASES);
+      //sails.log(rawQueryPatientCases);
+
+      sails.sendNativeQuery('DROP TABLE IF EXISTS querycasetbl');
 
 
-      return exits.success({list: rawPatients.rows});
+
+      if (!_.isEmpty(rawPatients.rows)){
+        return exits.success({
+          patient_record: rawPatients.rows,
+          patient_cases: rawQueryPatientCases.rows,
+          status: '200 OK'
+        })
+
+      }
+      return exits.success({
+        status: '200 Patient Not Found'
+      });
+
+
+
+
+
     }
     catch(err){
-      console.log(err);
+      //console.log(err);
       return exits.success();
     }
 
