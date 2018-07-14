@@ -21,4 +21,5 @@ module.exports.policies = {
   'gps/*': true,
   'consultants/*': true,
   'querycases/*': true,
+  'test/*': true
 };

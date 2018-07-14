@@ -8,6 +8,16 @@ module.exports = {
 
 
   inputs: {
+    nric: {
+      description: 'The ID of the user to look up.',
+      type: 'string',
+      required: true
+    },
+    DOB: {
+      description: 'a',
+      type: 'string',
+      required: true
+    }
 
     // nric:{
     //   type: 'number',
@@ -18,9 +28,13 @@ module.exports = {
 
 
   exits: {
-    // success: {
-    //   responseType:'view'
-    // },
+    success: {
+
+    },
+    notFound: {
+      description: 'No user with the specified ID was found in the database.',
+      responseType: 'notFound'
+    }
 
   },
 
@@ -44,11 +58,14 @@ module.exports = {
       // var rawTable = await sails.sendNativeQuery(consultantstable);
       // return exits.success(rawTable.rows);
 
-      var PATIENTS_GET = 'select * from patients'
+
+      const { nric, DOB } = inputs;
+
+      var PATIENTS_GET = 'select * from patients WHERE nric = ' + nric +' AND DOB = '+ DOB + ';';
       var rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
 
 
-      return exits.success(rawPatients.rows);
+      return exits.success({list: rawPatients.rows});
     }
     catch(err){
       console.log(err);

@@ -53,11 +53,12 @@ module.exports.routes = {
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
   'GET /api/v1/patients/get': { action: 'patients/get' },
+
   'GET /api/v1/gps/get': { action: 'gps/get' },
   'GET /api/v1/consultants/get': { action: 'consultants/get' },
   'GET /api/v1/querycases/get': { action: 'querycases/get' },
 
-
+  'POST /api/v1/test/post': { action: 'test/post' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
