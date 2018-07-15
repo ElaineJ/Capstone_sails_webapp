@@ -61,7 +61,7 @@ module.exports.routes = {
 
 
   // PATIENTS
-  'GET /api/v1/patients/get': { action: 'patients/get' },
+  'GET /api/v1/patients/get': { action: 'patients/fetch' },
   'POST /api/v1/patients/login': { action: 'patients/login' },
   'POST /api/v1/patients/register': { action: 'patients/register' },
 

@@ -69,12 +69,20 @@ module.exports = {
 
       sails.sendNativeQuery('DROP TABLE IF EXISTS querycasetbl');
 
+      const queryRows = rawPatients.rows;
+      const queryPatientCaseRow = rawQueryPatientCases.rows;
+      const patientRecordsT = Object.values(queryRows[0])[0];
+      const patientRecordsY = Object.values(queryRows[0])[1];
 
 
-      if (!_.isEmpty(rawPatients.rows)){
+
+      if (!_.isEmpty(queryRows) && _.size(queryRows) == 1){
         return exits.success({
-          patient_record: rawPatients.rows,
-          patient_cases: rawQueryPatientCases.rows,
+          patient_record: queryRows[0],
+          patient_recordt:{nric: patientRecordsT},
+          //patient_record:{nric:patientRecordsT, name:patientRecordsY},
+
+          patient_cases: queryPatientCaseRow[0],
           status: '200 OK'
         })
 

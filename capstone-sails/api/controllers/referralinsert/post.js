@@ -22,74 +22,70 @@ module.exports = {
     var _ =require('lodash');
 
     var obj = {
-      "patient_record":
-        {
-          "nric": "S7890",
-          "firstName": "Bill",
-          "lastName": "Tan",
-          "DOB": "2018-07-15",
-          "allergies": "Penicillin",
-          "medicalHistory": "patient had history of asthma",
-          "gender": "M",
-          "isOverseas": "No"
-        }
-      ,
-      "patient_cases": [
-        {
-          "caseId": 10006,
-          "patientName": "Bill Tan",
-          "nric": "S7890",
-          "DOB": "2018-07-15",
-          "allergies": "Penicillin",
-          "medicalHistory": "patient had history of asthma",
-          "gender": "M",
-          "gpName": "Alan Tan",
-          "licenceIdGP": "0897564312",
-          "gpEmail": "alantan@nuh.sg",
-          "gpPhoneNumber": "90909091",
-          "temperature": 38.8,
-          "systole": 110,
-          "diastole": 70,
-          "bp": 90,
-          "fullBloodCount": "Normal",
-          "ptt": "Abnormal",
-          "UECr": "Normal",
-          "liverFunctionTest": "Normal",
-          "system": "Neurology",
-          "symptoms": "Duration ------ >3min, Eye Rolling, Fever, Type Of Movement ------ Atonic, Vomitting",
-          "signs": "Power - Abnormal, Tone - Abnormal",
-          "additionalInfo": "Patient had been experiencing condition since he returned from camp",
-          "consultantName": "Kevin Tan",
-          "licenceIdConsultant": "123456789",
-          "consultantEmail": "kevintan@nuh.sg",
-          "consultantPhoneNumber": "90900088",
-          "assigned": 1,
-          "appointmentTime": "2018-05-19T03:30:59.000Z",
-          "totalSeverityScore": 16
-        }
-      ],
+      "patient_record": {
+        "nric": "S9512721E",
+        "firstName": "Jacob",
+        "lastName": "Tan",
+        "DOB": "1995-09-04T16:00:00.000Z",
+        "allergies": "Penicillin",
+        "medicalHistory": "patient had history of asthma",
+        "gender": "M",
+        "isOverseas": "No"
+      },
+      "patient_cases": {
+        "caseId": 10003,
+        "patientName": "Jacob Tan",
+        "nric": "S9512721E",
+        "DOB": "1995-09-05",
+        "allergies": "Penicillin",
+        "medicalHistory": "patient had history of asthma",
+        "gender": "M",
+        "gpName": "Alan Tan",
+        "licenceIdGP": "0897564312",
+        "gpEmail": "alantan@nuh.sg",
+        "gpPhoneNumber": "90909091",
+        "temperature": 38.8,
+        "systole": 110,
+        "diastole": 70,
+        "bp": 90,
+        "fullBloodCount": "Normal",
+        "ptt": "Abnormal",
+        "UECr": "Normal",
+        "liverFunctionTest": "Normal",
+        "system": "Neurology",
+        "symptoms": "Duration ------ >3min, Eye Rolling, Fever, Type Of Movement ------ Atonic, Vomitting",
+        "signs": "Power - Abnormal, Tone - Abnormal",
+        "additionalInfo": "Patient had been experiencing condition since he returned from camp",
+        "consultantName": "Kevin Tan",
+        "licenceIdConsultant": "123456789",
+        "consultantEmail": "kevintan@nuh.sg",
+        "consultantPhoneNumber": "90900088",
+        "assigned": 1,
+        "appointmentTime": "2018-05-19T03:30:59.000Z",
+        "totalSeverityScore": 16
+      },
       "status": "200 OK"
     };
 
 
 
     //console.log(obj);
-    var nric = _.get(obj, 'patient_record[0].nric');
-    var firstName = _.get(obj, 'patient_record[0].firstName');
-    var lastName = _.get(obj, 'patient_record[0].lastName');
-    var DOB = _.get(obj, 'patient_record[0].DOB');
-    var allergies = _.get(obj, 'patient_record[0].allergies');
-    var medicalHistory = _.get(obj, 'patient_record[0].medicalHistory');
-    var gender = _.get(obj, 'patient_record[0].gender');
-    var isOverseas = _.get(obj, 'patient_record[0].isOverseas');
+    var nric = _.get(obj, 'patient_record.nric');
+    var firstName = _.get(obj, 'patient_record.firstName');
+    var lastName = _.get(obj, 'patient_record.lastName');
+    var DOB = _.get(obj, 'patient_record.DOB');
+    var allergies = _.get(obj, 'patient_record.allergies');
+    var medicalHistory = _.get(obj, 'patient_record.medicalHistory');
+    var gender = _.get(obj, 'patient_record.gender');
+    var isOverseas = _.get(obj, 'patient_record.isOverseas');
 
     //var caseId = Math.floor((Math.random() * 100000000) + 1);
-    var caseId = _.get(obj, 'patient_cases[0].caseId');
-    var GPName = _.get(obj, 'patient_cases[0].GPName');
+    var caseId = _.get(obj, 'patient_cases.caseId');
+    var GPName = _.get(obj, 'patient_cases.GPName');
     //var createdAt = time.now();
 
-    var licenceIdGP = _.get(obj, 'patient_cases[0].licenceIdGP');
-    var GPEmail = _.get(obj, 'patient_cases[0].GPEmail');
+    var licenceIdGP = _.get(obj, 'patient_cases.licenceIdGP');
+    var GPEmail = _.get(obj, 'patient_cases.GPEmail');
     var GPPhoneNumber = _.get(obj, 'patient_cases[0].GPPhoneNumber');
     var temperature = _.get(obj, 'patient_cases[0].temperature');
     var systole = _.get(obj, 'patient_cases[0].systole');
@@ -193,7 +189,7 @@ module.exports = {
     //
     // return exits.success(insertCase,insertCaseConsultant,insertCaseGP,insertCasePatient,insertCaseSYMPTOM1,insertCaseSYMPTOM2,insertCaseSYMPTOM3,insertCaseSYMPTOM4,insertCaseSIGN);
 
-
+    return exits.success(nric);
     return exits.success(symptoms);
     //return exits.success(insertPatient);
 
