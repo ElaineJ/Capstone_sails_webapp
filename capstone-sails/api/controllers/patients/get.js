@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Get',
+  friendlyName: 'GetPatients',
 
 
-  description: 'Get patients.',
+  description: 'Used to login and fetch patient data. Returns the patent\'s bio',
 
 
   inputs: {
@@ -18,12 +18,6 @@ module.exports = {
       type: 'string',
       required: true
     }
-
-    // nric:{
-    //   type: 'number',
-    //   required: true,
-    // }
-
   },
 
 
