@@ -28,15 +28,17 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    let NRIC = inputs.NRIC;
-    let DOB = inputs.DOB;
+    const {
+      NRIC,
+      DOB
+    } = inputs;
 
     // TODO query in DB for a specific email address
     // Then, take the
 
-    const queryResuts = {patient: {}}
+    const queryResults = {patient: {}}
 
-    if (!_.isEmpty(queryResuts.rows)){
+    if (!_.isEmpty(queryResults.rows)){
       return exits.success({
         patient: queryResults.patient,
         status: '200 OK'
@@ -47,7 +49,6 @@ module.exports = {
     return exits.success({
       status: '200 Not found'
     });
-    return exits.success();
 
   }
 };

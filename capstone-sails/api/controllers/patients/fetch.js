@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'GetPatients',
+  friendlyName: 'fetch patient data',
 
 
-  description: 'Used to login and fetch patient data. Returns the patent\'s bio',
+  description: 'Used fetch patient data. Returns the patient\'s bio',
 
 
   inputs: {

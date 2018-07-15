@@ -63,11 +63,14 @@ module.exports.routes = {
   // PATIENTS
   'GET /api/v1/patients/get': { action: 'patients/get' },
   'POST /api/v1/patients/login': { action: 'patients/login' },
+  'POST /api/v1/patients/register': { action: 'patients/register' },
 
 
 
   // GPs
   'POST /api/v1/gps/login': { action: 'gps/login' },
+  'POST /api/v1/provider/register': { action: 'registerProvider' },
+
 
   // Consultants
   'POST /api/v1/consultants/login': { action: 'consultants/login' },

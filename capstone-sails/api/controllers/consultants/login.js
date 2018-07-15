@@ -11,13 +11,15 @@ module.exports = {
     email: {
       description: 'The registered email address',
       type: 'string',
-      required: true
+      required: true,
+      isEmail: true
     },
 
     password: {
       description: 'The password to be compared',
       type: 'string',
-      required: true
+      required: true,
+      minLength: 8
     }
   },
 
@@ -31,8 +33,10 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-      let emailAddress = inputs.email;
-      let password = inputs.password;
+      const {
+        email,
+        password
+      } = inputs;
 
       var credentials = require('./../../services/credentials');
 
