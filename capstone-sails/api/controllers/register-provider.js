@@ -19,13 +19,13 @@ module.exports = {
       required: true
     },
     organization: {
-      description: "the organization the provider belongs to"
+      description: "the organization the provider belongs to",
       type: 'string',
       required: true
     },
     isOverseas: {
-      description: "is the organization an overseas organization?"
-      isBoolean: true
+      description: "is the organization an overseas organization?",
+      type: 'boolean',
     },
     email: {
       description: "the provider's email address",
@@ -75,7 +75,7 @@ module.exports = {
     // TODO insert if not exist into the temporary table
     // TODO the table is the one before manual validation
 
-    / upon successful insert, return 200 OK
+    // upon successful insert, return 200 OK
     return exits.success();
 
   }

@@ -38,23 +38,23 @@ module.exports = {
       password
     } = inputs;
 
-    var credentials = require('./../../services/credentials');
-
-    // TODO query in DB for a specific email address
-    // Then, take the
-
-    const row = {hashed: "2345678ijvcdrty"}; // replace this later
-    const passwordMatch = credentials.comparePassword(password, row.hashed)
-
-    if (passwordMatch) {
-      return exits.success({
-        // return the entire consultant data here
-      });
-    }
-
-    return exits.success({
-      status: '200 Invalid Credentials'
-    });
+    // var credentials = require('./../../services/credentials');
+    //
+    // // TODO query in DB for a specific email address
+    // // Then, take the
+    //
+    // const row = {hashed: "2345678ijvcdrty"}; // replace this later
+    // const passwordMatch = credentials.comparePassword(password, row.hashed)
+    //
+    // if (passwordMatch) {
+    //   return exits.success({
+    //     // return the entire consultant data here
+    //   });
+    // }
+    //
+    // return exits.success({
+    //   status: '200 Invalid Credentials'
+    // });
   }
 
 };

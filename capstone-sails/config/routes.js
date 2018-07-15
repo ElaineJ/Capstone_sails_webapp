@@ -69,7 +69,7 @@ module.exports.routes = {
 
   // GPs
   'POST /api/v1/gps/login': { action: 'gps/login' },
-  'POST /api/v1/provider/register': { action: 'registerProvider' },
+  'POST /api/v1/provider/register': { action: 'register-provider' },
 
 
   // Consultants

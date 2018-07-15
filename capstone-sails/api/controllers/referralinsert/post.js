@@ -22,7 +22,7 @@ module.exports = {
     var _ =require('lodash');
 
     var obj = {
-      "patient_record": [
+      "patient_record":
         {
           "nric": "S7890",
           "firstName": "Bill",
@@ -33,7 +33,7 @@ module.exports = {
           "gender": "M",
           "isOverseas": "No"
         }
-      ],
+      ,
       "patient_cases": [
         {
           "caseId": 10006,
@@ -70,57 +70,6 @@ module.exports = {
       ],
       "status": "200 OK"
     };
-
-
-    // var obj = JSON.parse('{\n' +
-    //   '    "patient_record": [\n' +
-    //   '        {\n' +
-    //   '            "nric": "S4567",\n' +
-    //   '            "firstName": "Adam",\n' +
-    //   '            "lastName": "Tan",\n' +
-    //   '            "DOB": "2018-07-15",\n' +
-    //   '            "allergies": "Penicillin",\n' +
-    //   '            "medicalHistory": "",\n' +
-    //   '            "gender": "M",\n' +
-    //   '            "isOverseas": "No"\n' +
-    //   '        }\n' +
-    //   '    ],\n' +
-    //   '    "patient_cases": [\n' +
-    //   '        {\n' +
-    //   '            "caseId": 10004,\n' +
-    //   '            "patientName": "Adam Tan",\n' +
-    //   '            "nric": "S4567",\n' +
-    //   '            "DOB": "2018-07-15",\n' +
-    //   '            "allergies": "Penicillin",\n' +
-    //   '            "medicalHistory": "",\n' +
-    //   '            "gender": "M",\n' +
-    //   '            "GPName": "Alan Tan",\n' +
-    //   '            "licenceIdGP": "0897564312",\n' +
-    //   '            "GPEmail": "alantan@nuh.sg",\n' +
-    //   '            "GPPhoneNumber": "90909091",\n' +
-    //   '            "temperature": 38.8,\n' +
-    //   '            "systole": 110,\n' +
-    //   '            "diastole": 70,\n' +
-    //   '            "bp": 90,\n' +
-    //   '            "fullBloodCount": "Normal",\n' +
-    //   '            "ptt": "Abnormal",\n' +
-    //   '            "UECr": "Normal",\n' +
-    //   '            "liverFunctionTest": "Normal",\n' +
-    //   '            "system": "Neurology",\n' +
-    //   '            "symptoms": "Duration - >3min, Eye Rolling, Fever, Type Of Movement - Atonic, Vomitting",\n' +
-    //   '            "signs": "Power - Abnormal, Tone - Abnormal",\n' +
-    //   '            "additionalInfo": "Patient had been experiencing condition since he returned from camp",\n' +
-    //   '            "consultantName": "Kevin Tan",\n' +
-    //   '            "licenceIdConsultant": "123456789",\n' +
-    //   '            "consultantEmail": "kevintan@nuh.sg",\n' +
-    //   '            "consultantPhoneNumber": "90900088",\n' +
-    //   '            "assigned": 1,\n' +
-    //   '            "appointmentTime": "2018-05-19T03:30:59.000Z",\n' +
-    //   '            "totalSeverityScore": 16,\n' +
-    //   '        }\n' +
-    //   '    ],\n' +
-    //   '    "status": "200 OK"\n' +
-    //   '}');
 
 
 
