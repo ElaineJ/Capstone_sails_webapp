@@ -37,21 +37,6 @@ module.exports = {
   fn: async function (inputs, exits) {
 
     try{
-      // var PATIENTS_GET_SQL = 'call sp_pat_get()'
-      // var patientstable = 'select * from patientstbl'
-      //
-      // var rawResults = await sails.sendNativeQuery(PATIENTS_GET_SQL);
-      // var rawTable = await sails.sendNativeQuery(patientstable);
-      // return exits.success(rawTable.rows);
-
-      //
-      // var CONSULTANTS_GET_SQL = 'call query_consultant()'
-      //
-      // var consultantstable = 'select * from queryconsultanttbl'
-      //
-      // var rawResults = await sails.sendNativeQuery(CONSULTANTS_GET_SQL);
-      // var rawTable = await sails.sendNativeQuery(consultantstable);
-      // return exits.success(rawTable.rows);
 
       var _ =require('lodash');
 
@@ -63,26 +48,64 @@ module.exports = {
       const PATIENTS_CASES = 'call query_case()';
       const PATIENTS_QUERY_CASES = 'select * from querycasetbl WHERE nric=\'' + nric + '\'';
       const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
-      //sails.log(rawPatientCases);
+
       const rawQueryPatientCases = await sails.sendNativeQuery(PATIENTS_QUERY_CASES);
-      //sails.log(rawQueryPatientCases);
 
       sails.sendNativeQuery('DROP TABLE IF EXISTS querycasetbl');
 
-      const queryRows = rawPatients.rows;
+      const patientRecord = rawPatients.rows;
       const queryPatientCaseRow = rawQueryPatientCases.rows;
-      const patientRecordsT = Object.values(queryRows[0])[0];
-      const patientRecordsY = Object.values(queryRows[0])[1];
+      const caseId = Object.values(queryPatientCaseRow[0])[0];
+      //const system = Object.values(queryPatientCaseRow[0])[20];
 
+      const parameters={
+        Temperature:String(Object.values(queryPatientCaseRow[0])[12]),
+        Systole: String(Object.values(queryPatientCaseRow[0])[13]),
+        Diastole: String(Object.values(queryPatientCaseRow[0])[14]),
+        Blood_Pressure: String(Object.values(queryPatientCaseRow[0])[15])
 
+      };
 
-      if (!_.isEmpty(queryRows) && _.size(queryRows) == 1){
+      const accessSymptom= {
+        Symptoms:Object.values(queryPatientCaseRow[0])[21]
+
+      };
+      const accessSigns={
+        Signs: Object.values(queryPatientCaseRow[0])[22]
+
+      };
+
+      const investigations = {
+        Full_Blood_Count: Object.values(queryPatientCaseRow[0])[16],
+        PTT: Object.values(queryPatientCaseRow[0])[17],
+        UCEr: Object.values(queryPatientCaseRow[0])[18],
+        Liver_Function_Test:Object.values(queryPatientCaseRow[0])[19]
+      };
+
+      constcase= {
+        parameters: parameters,
+        symptoms: accessSymptom,
+        signs: accessSigns,
+        investigations: investigations,
+        additionalInformation: Object.values(queryPatientCaseRow[0])[23]
+      };
+
+      doctorInformation = {
+        Name: Object.values(queryPatientCaseRow[0])[7],
+        GPClinic: Object.values(queryPatientCaseRow[0])[8],
+        LicenceIdGP: Object.values(queryPatientCaseRow[0])[9],
+        GPEmail: Object.values(queryPatientCaseRow[0])[10],
+        GPPhoneNumber: Object.values(queryPatientCaseRow[0])[11],
+      };
+
+      if (!_.isEmpty(patientRecord) && _.size(patientRecord) == 1){
         return exits.success({
-          patient_record: queryRows[0],
-          patient_recordt:{nric: patientRecordsT},
-          //patient_record:{nric:patientRecordsT, name:patientRecordsY},
+          caseId: caseId,
+          patient: patientRecord[0],
+          case: constcase,
+          referringDoctor: doctorInformation,
+          createdAt: Date.now(),
 
-          patient_cases: queryPatientCaseRow[0],
           status: '200 OK'
         })
 

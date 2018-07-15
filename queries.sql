@@ -55,9 +55,10 @@ delimiter $$
 
 CREATE PROCEDURE query_case()
 BEGIN 
+DROP TABLE IF EXISTS querycasetbl;
 CREATE TEMPORARY TABLE querycasetbl 
 SELECT cases.caseId, GROUP_CONCAT(DISTINCT patients.firstName, ' ', patients.lastName)patientName, cases.nric, GROUP_CONCAT(DISTINCT patients.DOB)DOB, GROUP_CONCAT(DISTINCT patients.allergies)allergies,
-GROUP_CONCAT(DISTINCT patients.medicalHistory)medicalHistory, GROUP_CONCAT(DISTINCT patients.gender)gender, GROUP_CONCAT(DISTINCT gps.firstName, ' ', gps.lastName)gpName, cases.licenceIdGP, GROUP_CONCAT(DISTINCT gps.email)gpEmail, GROUP_CONCAT(DISTINCT gps.number)gpPhoneNumber, 
+GROUP_CONCAT(DISTINCT patients.medicalHistory)medicalHistory, GROUP_CONCAT(DISTINCT patients.gender)gender, GROUP_CONCAT(DISTINCT gps.firstName, ' ', gps.lastName)GPName, GROUP_CONCAT(DISTINCT gps.organisation)GPClinic,cases.licenceIdGP, GROUP_CONCAT(DISTINCT gps.email)GPEmail, GROUP_CONCAT(DISTINCT gps.number)GPPhoneNumber, 
 cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fullBloodCount, cases.ptt, cases.UECr, cases.liverFunctionTest, GROUP_CONCAT(DISTINCT symptoms.system)system,
 GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
 cases.additionalInfo, GROUP_CONCAT(DISTINCT consultants.firstName, ' ',consultants.lastName)consultantName, cases.licenceIdConsultant, GROUP_CONCAT(DISTINCT consultants.email)consultantEmail,GROUP_CONCAT(DISTINCT consultants.number)consultantPhoneNumber, cases.assigned, cases.appointmentTime,
@@ -107,7 +108,7 @@ select * from querycasetbl WHERE licenceIdGP='0897564312'AND gpEmail = 'alantan@
 
 
 
-
+DROP TABLE IF EXISTS querycasetbl;
 DROP procedure query_case;
 DROP table querycasetbl;
 
@@ -140,7 +141,7 @@ INSERT INTO caseSign VALUES('10002','12');   -- Match the signs entries to the c
 
 INSERT INTO caseGP VALUES('10002','0897564312');   -- Match the GplicenceID with case
 INSERT INTO caseConsultant VALUES('10002','123456789');  -- Match the assigned consultantID with case
-
+INSERT INTO casePatient VALUES('10001','S9811714J');
 
 
 

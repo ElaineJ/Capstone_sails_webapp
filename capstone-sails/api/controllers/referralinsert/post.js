@@ -69,6 +69,8 @@ module.exports = {
 
 
 
+
+
     //console.log(obj);
     var nric = _.get(obj, 'patient_record.nric');
     var firstName = _.get(obj, 'patient_record.firstName');
@@ -79,10 +81,9 @@ module.exports = {
     var gender = _.get(obj, 'patient_record.gender');
     var isOverseas = _.get(obj, 'patient_record.isOverseas');
 
-    //var caseId = Math.floor((Math.random() * 100000000) + 1);
+    //var caseId = Math.floor((Math.random() * 100000000) + 1); //use this to randomly generate caseId
     var caseId = _.get(obj, 'patient_cases.caseId');
     var GPName = _.get(obj, 'patient_cases.GPName');
-    //var createdAt = time.now();
 
     var licenceIdGP = _.get(obj, 'patient_cases.licenceIdGP');
     var GPEmail = _.get(obj, 'patient_cases.GPEmail');
@@ -107,90 +108,80 @@ module.exports = {
     var appointmentTime = '2018-07-27 10:30:59';
     var totalSeverityScore = _.get(obj, 'patient_cases[0].totalSeverityScore');
     var createdAt = '2018-07-01 10:30:59';
+    //var createdAt = time.now(); // use this if want assigned time to now
     var assignedTime = '2018-07-20 10:30:59';
-    //
-    //
-    //
-    // var rawsymptoms = _.get(obj, 'patient_cases[0].symptoms');
-    // var symptoms = rawsymptoms.split(',')
-    // //var symptoms = rawsymptoms.push();
-    //
 
+
+
+    // ------------------------------- INSERT PATIENT RECORD -------------------------------------------
+    var INSERT_PATIENT = "\'"+nric+"\'" +','+"\'"+firstName+"\'"+','+"\'"+lastName+"\'" +','+"\'"+DOB+"\'" +','+"\'"+allergies+"\'" +','+"\'" + medicalHistory+"\'"  +','+"\'"+gender+"\'" + ',' +"\'"+isOverseas+"\'";
+
+    const INSERT_RECORD = "INSERT INTO patients VALUES ("+ INSERT_PATIENT+")";
+
+    const insertPatient = await sails.sendNativeQuery(INSERT_RECORD);
+
+
+    // ---------------------------------INSERT NEW CASE ----------------------------------
     //
-    // // ------------------------------- INSERT PATIENT RECORD -------------------------------------------
-    // var INSERT_PATIENT = "\'"+nric+"\'" +','+"\'"+firstName+"\'"+','+"\'"+lastName+"\'" +','+"\'"+DOB+"\'" +','+"\'"+allergies+"\'" +','+"\'" + medicalHistory+"\'"  +','+"\'"+gender+"\'" + ',' +"\'"+isOverseas+"\'";
-    //
-    // const INSERT_RECORD = "INSERT INTO patients VALUES ("+ INSERT_PATIENT+")";
-    //
-    // const insertPatient = await sails.sendNativeQuery(INSERT_RECORD);
-    //
-    //
-    // // ---------------------------------INSERT NEW CASE ----------------------------------
-    // //
-    // var INSERT_CASE = "\'"+caseId+"\'" +','+"\'"+nric+"\'"+','+"\'"+licenceIdGP+"\'" +','+"\'"+createdAt+"\'" +','+"\'"+temperature+"\'" +','+"\'" + systole+"\'"  +','+"\'"+diastole+"\'" + ',' +"\'"+bp+"\'" +','+"\'"+fullBloodCount+"\'"+','+"\'"+ptt+"\'"+','+"\'"+UECr+"\'" +','+"\'"+liverFunctionTest+"\'" +','+"\'"+additionalInfo+"\'" +','+"\'"+assigned+"\'" +','+"\'"+assignedTime+"\'" +','+"\'"+licenceIdConsultant+"\'" +','+"\'"+appointmentTime+"\'"    ;
-    //
-    // const INSERT_CASE_RECORD = "INSERT INTO cases VALUES ("+ INSERT_CASE +")";
-    //
-    // const insertCase = await sails.sendNativeQuery(INSERT_CASE_RECORD);
-    //
+    var INSERT_CASE = "\'"+caseId+"\'" +','+"\'"+nric+"\'"+','+"\'"+licenceIdGP+"\'" +','+"\'"+createdAt+"\'" +','+"\'"+temperature+"\'" +','+"\'" + systole+"\'"  +','+"\'"+diastole+"\'" + ',' +"\'"+bp+"\'" +','+"\'"+fullBloodCount+"\'"+','+"\'"+ptt+"\'"+','+"\'"+UECr+"\'" +','+"\'"+liverFunctionTest+"\'" +','+"\'"+additionalInfo+"\'" +','+"\'"+assigned+"\'" +','+"\'"+assignedTime+"\'" +','+"\'"+licenceIdConsultant+"\'" +','+"\'"+appointmentTime+"\'"    ;
+
+    const INSERT_CASE_RECORD = "INSERT INTO cases VALUES ("+ INSERT_CASE +")";
+
+    const insertCase = await sails.sendNativeQuery(INSERT_CASE_RECORD);
+
     // // ----------- MATCH CASE TO SYMPOTOM -----------------
-    //
-    // const INSERT_CASE_SYMPTOM1 = "INSERT INTO caseSymptom VALUES('10006','24')";
-    // const INSERT_CASE_SYMPTOM2 = "INSERT INTO caseSymptom VALUES('10006','25')";
-    // const INSERT_CASE_SYMPTOM3 = "INSERT INTO caseSymptom VALUES('10006','26')";
-    // const INSERT_CASE_SYMPTOM4 = "INSERT INTO caseSymptom VALUES('10006','27')";
-    // const insertCaseSYMPTOM1 = await sails.sendNativeQuery(INSERT_CASE_SYMPTOM1);
-    // const insertCaseSYMPTOM2 = await sails.sendNativeQuery(INSERT_CASE_SYMPTOM2);
-    // const insertCaseSYMPTOM3 = await sails.sendNativeQuery(INSERT_CASE_SYMPTOM3);
-    // const insertCaseSYMPTOM4 = await sails.sendNativeQuery(INSERT_CASE_SYMPTOM4);
-    //
-    //
-    // // INSERT INTO caseSymptom VALUES('10002','24'); -- Match the symptoms entries to the case
-    // // INSERT INTO caseSymptom VALUES('10002','25');
-    // // INSERT INTO caseSymptom VALUES('10002','26');
-    // // INSERT INTO caseSymptom VALUES('10002','27');
-    //
-    // // ----------- MATCH CASE TO SIGN -----------------
-    //
-    // const INSERT_CASE_SIGN = "INSERT INTO caseSign VALUES('10006','12')";
-    // const insertCaseSIGN = await sails.sendNativeQuery(INSERT_CASE_SIGN);
-    // // INSERT INTO caseSign VALUES('10002','12');   -- Match the signs entries to the case
-    //
-    // //------------ MATCH CASE TO GP -------------
-    //
-    // var INSERT_CASE_GP = "\'"+caseId+"\'" +','+"\'"+licenceIdGP+"\'";
-    //
-    // const INSERT_CASE_GP_RECORD = "INSERT INTO caseGP VALUES ("+ INSERT_CASE_GP +")";
-    //
-    // const insertCaseGP = await sails.sendNativeQuery(INSERT_CASE_GP_RECORD);
-    //
-    //
-    // //------------ MATCH CASE TO Consultant -------------
-    //
-    // var INSERT_CASE_CONSULTANT = "\'"+caseId+"\'" +','+"\'"+licenceIdConsultant+"\'";
-    //
-    // const INSERT_CASE_CONSULTANT_RECORD = "INSERT INTO caseConsultant VALUES ("+ INSERT_CASE_CONSULTANT +")";
-    //
-    // const insertCaseConsultant = await sails.sendNativeQuery(INSERT_CASE_CONSULTANT_RECORD);
-    //
-    //
-    // //------------ MATCH CASE TO PAIENT -------------
-    //
-    // var INSERT_CASE_PATIENT = "\'"+caseId+"\'" +','+"\'"+nric+"\'";
-    //
-    // const INSERT_CASE_PATIENT_RECORD = "INSERT INTO casePatient VALUES ("+ INSERT_CASE_PATIENT +")";
-    //
-    // const insertCasePatient = await sails.sendNativeQuery(INSERT_CASE_PATIENT_RECORD);
-    //
-    //
-    //
-    //
-    //
-    //
-    // return exits.success(insertCase,insertCaseConsultant,insertCaseGP,insertCasePatient,insertCaseSYMPTOM1,insertCaseSYMPTOM2,insertCaseSYMPTOM3,insertCaseSYMPTOM4,insertCaseSIGN);
 
-    return exits.success(nric);
-    return exits.success(symptoms);
+    var symptoms = [24,25,26,27];
+    var symptomsLength = symptoms.length;
+    for (var i = 0; i < symptomsLength; i++) {
+      var INSERT_SYMPTOM = "\'"+caseId+"\'" +','+"\'"+symptoms[i]+"\'"
+      const INSERT_CASE_SYMPTOM = "INSERT INTO caseSymptom VALUES ("+ INSERT_SYMPTOM +")";
+      const insertCaseSymptom = await sails.sendNativeQuery(INSERT_CASE_SYMPTOM);
+    }
+
+    // // ----------- MATCH CASE TO SIGN -----------------
+
+    var signs = [24,25,26,27];
+    var signsLength = signs.length;
+    for (var i = 0; i < signsLength; i++) {
+      var INSERT_SIGN = "\'"+caseId+"\'" +','+"\'"+signs[i]+"\'"
+      const INSERT_CASE_SIGN = "INSERT INTO caseSign VALUES ("+ INSERT_SIGN +")";
+      const insertCaseSign = await sails.sendNativeQuery(INSERT_CASE_SIGN);
+    }
+
+    //------------ MATCH CASE TO GP -------------
+
+    var INSERT_CASE_GP = "\'"+caseId+"\'" +','+"\'"+licenceIdGP+"\'";
+
+    const INSERT_CASE_GP_RECORD = "INSERT INTO caseGP VALUES ("+ INSERT_CASE_GP +")";
+
+    const insertCaseGP = await sails.sendNativeQuery(INSERT_CASE_GP_RECORD);
+
+
+    //------------ MATCH CASE TO Consultant -------------
+
+    var INSERT_CASE_CONSULTANT = "\'"+caseId+"\'" +','+"\'"+licenceIdConsultant+"\'";
+
+    const INSERT_CASE_CONSULTANT_RECORD = "INSERT INTO caseConsultant VALUES ("+ INSERT_CASE_CONSULTANT +")";
+
+    const insertCaseConsultant = await sails.sendNativeQuery(INSERT_CASE_CONSULTANT_RECORD);
+
+
+    //------------ MATCH CASE TO PAIENT -------------
+
+    var INSERT_CASE_PATIENT = "\'"+caseId+"\'" +','+"\'"+nric+"\'";
+
+    const INSERT_CASE_PATIENT_RECORD = "INSERT INTO casePatient VALUES ("+ INSERT_CASE_PATIENT +")";
+
+    const insertCasePatient = await sails.sendNativeQuery(INSERT_CASE_PATIENT_RECORD);
+
+
+
+
+
+
+    return exits.success(insertCase,insertCaseConsultant,insertCaseGP,insertCasePatient,insertCaseSymptom,insertCaseSign);
+
     //return exits.success(insertPatient);
 
   }
