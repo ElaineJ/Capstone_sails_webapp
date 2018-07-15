@@ -33,20 +33,18 @@ CREATE TABLE patients (
 	nric VARCHAR(15),
     firstName VARCHAR(100),
     lastName VARCHAR(100),
-    DOB DATETIME,
+    DOB DATE,
     allergies VARCHAR(150),
     medicalHistory VARCHAR(150),
 	gender CHAR(1) CHECK (gender="F" or gender="M"),
-    status CHAR(50) CHECK (status="local" OR status="overseas"),
+    isOverseas CHAR(5) CHECK (status="Yes" OR status="No"),
     PRIMARY KEY (nric)
 );
 SELECT * FROM patients WHERE patients.nric = 'S9811714J' AND patients.DOB = '1998-05-05 13:09:11';
-SELECT * FROM patients;
 
-
-INSERT INTO patients VALUES ('S9811714J', 'John', 'Tan','1998-05-05 13:09:11','Penicillin','patient had been hospitalise for asthma attack','M',  'local');
-INSERT INTO patients VALUES ('S9911821P', 'James', 'Tan','1999-08-05 13:09:11','Penicillin',NULL,'M',  'local');
-INSERT INTO patients VALUES ('S9512721E', 'Jacob', 'Tan','1995-09-05 13:09:11','Penicillin','patient had history of asthma','M',  'local');
+INSERT INTO patients VALUES ('S9811714J', 'John', 'Tan','1998-05-05','Penicillin','patient had been hospitalise for asthma attack','M',  'No');
+INSERT INTO patients VALUES ('S9911821P', 'James', 'Tan','1999-08-05','Penicillin',NULL,'M',  'No');
+INSERT INTO patients VALUES ('S9512721E', 'Jacob', 'Tan','1995-09-05','Penicillin','patient had history of asthma','M',  'No');
 
 -- DELIMITER $$
 -- CREATE DEFINER = 'root'@'localhost' PROCEDURE `sp_pat_get`(v_nric VARCHAR(15))
@@ -189,47 +187,47 @@ INSERT INTO symptoms VALUES (NULL,'Stridor','Respiratory','2');
 INSERT INTO symptoms VALUES (NULL,'Barking Cough','Respiratory','3');
 INSERT INTO symptoms VALUES (NULL,'Phelgm','Respiratory','1');
 INSERT INTO symptoms VALUES (NULL,'Drooling','Respiratory','3');
-INSERT INTO symptoms VALUES (NULL,'Difficulty Breathing - Able to speak in full sentences','Respiratory','3');
-INSERT INTO symptoms VALUES (NULL,'Difficulty Breathing - Gasping','Respiratory','3');
-INSERT INTO symptoms VALUES (NULL,'Difficulty Breathing - Tripod Position','Respiratory','3');
+INSERT INTO symptoms VALUES (NULL,'Difficulty Breathing ------ Able to speak in full sentences','Respiratory','3');
+INSERT INTO symptoms VALUES (NULL,'Difficulty Breathing ------ Gasping','Respiratory','3');
+INSERT INTO symptoms VALUES (NULL,'Difficulty Breathing ------ Tripod Position','Respiratory','3');
 INSERT INTO symptoms VALUES (NULL,'Fever','Respiratory','1');
 INSERT INTO symptoms VALUES (NULL,'Difficulty Breathing','Circulatory','3');
 INSERT INTO symptoms VALUES (NULL,'Palpitations','Circulatory','2');
 INSERT INTO symptoms VALUES (NULL,'Dizziness','Circulatory','3');
 INSERT INTO symptoms VALUES (NULL,'Lethargy','Circulatory','2');
-INSERT INTO symptoms VALUES (NULL,'Joint Pain - Upper Limb','Musculoskeletal','1');
-INSERT INTO symptoms VALUES (NULL,'Joint Pain - Lower Limb','Musculoskeletal','1');
-INSERT INTO symptoms VALUES (NULL,'Joint Pain - Worse After Activity','Musculoskeletal','1');
+INSERT INTO symptoms VALUES (NULL,'Joint Pain ------ Upper Limb','Musculoskeletal','1');
+INSERT INTO symptoms VALUES (NULL,'Joint Pain ------ Lower Limb','Musculoskeletal','1');
+INSERT INTO symptoms VALUES (NULL,'Joint Pain ------ Worse After Activity','Musculoskeletal','1');
 INSERT INTO symptoms VALUES (NULL,'Joint Pain - Pain At Rest','Musculoskeletal','3');
 INSERT INTO symptoms VALUES (NULL,'Trauma','Musculoskeletal','3');
-INSERT INTO symptoms VALUES (NULL,'Rash - >12hr','Musculoskeletal','2');
-INSERT INTO symptoms VALUES (NULL,'Rash - >3days','Musculoskeletal','1');
-INSERT INTO symptoms VALUES (NULL,'Rash - Sudden','Musculoskeletal','3');
-INSERT INTO symptoms VALUES (NULL,'Rash - Bites','Musculoskeletal','2');
-INSERT INTO symptoms VALUES (NULL,'Rash - Expose To Natural','Musculoskeletal','2');
-INSERT INTO symptoms VALUES (NULL,'Rash - Overseas Travel','Musculoskeletal','2');
-INSERT INTO symptoms VALUES (NULL,'Rash - Itchy','Musculoskeletal','1');
-INSERT INTO symptoms VALUES (NULL,'Rash - Discharge','Musculoskeletal','1');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ >12hr','Musculoskeletal','2');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ >3days','Musculoskeletal','1');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ Sudden','Musculoskeletal','3');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ Bites','Musculoskeletal','2');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ Expose To Natural','Musculoskeletal','2');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ Overseas Travel','Musculoskeletal','2');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ Itchy','Musculoskeletal','1');
+INSERT INTO symptoms VALUES (NULL,'Rash ------ Discharge','Musculoskeletal','1');
 
 INSERT INTO symptoms VALUES (NULL,'Hematuria','Urinary','2'); -- menses
-INSERT INTO symptoms VALUES (NULL,'Frequency of Urine- <5','Urinary','2'); 
-INSERT INTO symptoms VALUES (NULL,'Frequency of Urine- >5','Urinary','1'); 
-INSERT INTO symptoms VALUES (NULL,'Frequency of Urine- >10','Urinary','2'); 
+INSERT INTO symptoms VALUES (NULL,'Frequency of Urine ------ <5','Urinary','2'); 
+INSERT INTO symptoms VALUES (NULL,'Frequency of Urine ------ >5','Urinary','1'); 
+INSERT INTO symptoms VALUES (NULL,'Frequency of Urine ------ >10','Urinary','2'); 
 INSERT INTO symptoms VALUES (NULL,'Dysuria','Urinary','1');
 INSERT INTO symptoms VALUES (NULL,'Fever','Urinary','1');
-INSERT INTO symptoms VALUES (NULL,'Urine Flow - Normal','Urinary','1');
-INSERT INTO symptoms VALUES (NULL,'Urine Flow - Abnormal','Urinary','2'); 
+INSERT INTO symptoms VALUES (NULL,'Urine Flow ------ Normal','Urinary','1');
+INSERT INTO symptoms VALUES (NULL,'Urine Flow ------ Abnormal','Urinary','2'); 
 INSERT INTO symptoms VALUES (NULL,'Testicular Pain','Urinary','3'); 
 
 INSERT INTO symptoms VALUES (NULL,'Fits','Neurology','2');
 INSERT INTO symptoms VALUES (NULL,'Fever','Neurology','1');
-INSERT INTO symptoms VALUES (NULL,'Duration - <1min','Neurology','1');
-INSERT INTO symptoms VALUES (NULL,'Duration - 1-3min','Neurology','2');
-INSERT INTO symptoms VALUES (NULL,'Duration - >3min','Neurology','3');
+INSERT INTO symptoms VALUES (NULL,'Duration ------ <1min','Neurology','1');
+INSERT INTO symptoms VALUES (NULL,'Duration ------ 1-3min','Neurology','2');
+INSERT INTO symptoms VALUES (NULL,'Duration ------ >3min','Neurology','3');
 INSERT INTO symptoms VALUES (NULL,'Self Aborted','Neurology','2');
-INSERT INTO symptoms VALUES (NULL,'Type Of Movement - Atonic','Neurology','3');
-INSERT INTO symptoms VALUES (NULL,'Type Of Movement - Clonic','Neurology','2');
-INSERT INTO symptoms VALUES (NULL,'Type Of Movement - Tonic-Clonic','Neurology','3');
+INSERT INTO symptoms VALUES (NULL,'Type Of Movement ------ Atonic','Neurology','3');
+INSERT INTO symptoms VALUES (NULL,'Type Of Movement ------ Clonic','Neurology','2');
+INSERT INTO symptoms VALUES (NULL,'Type Of Movement ------ Tonic-Clonic','Neurology','3');
 INSERT INTO symptoms VALUES (NULL,'Eye Rolling','Neurology','2');
 INSERT INTO symptoms VALUES (NULL,'Vomitting','Neurology','1');
 INSERT INTO symptoms VALUES (NULL,'Loss Of Continence','Neurology','1');
@@ -266,20 +264,20 @@ INSERT INTO signs VALUES (NULL,'Reflex - Abnormal','Neurology','1');
 
 
 -- PICTURES (DOUBLE CONFIRM THE SCORE)
-INSERT INTO signs VALUES (NULL,'R1','Respiratory','1');
-INSERT INTO signs VALUES (NULL,'R2','Respiratory','1');
-INSERT INTO signs VALUES (NULL,'R3','Respiratory','1');
-INSERT INTO signs VALUES (NULL,'R4','Respiratory','1');
+INSERT INTO signs VALUES (NULL,'0','Respiratory','1');
+INSERT INTO signs VALUES (NULL,'1','Respiratory','1');
+INSERT INTO signs VALUES (NULL,'2','Respiratory','1');
+INSERT INTO signs VALUES (NULL,'3','Respiratory','1');
 
-INSERT INTO signs VALUES (NULL,'G1','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G2','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G3','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G4','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G5','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G6','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G7','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G8','Gastrointestinal','1');
-INSERT INTO signs VALUES (NULL,'G9','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'0','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'1','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'2','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'3','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'4','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'5','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'6','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'7','Gastrointestinal','1');
+INSERT INTO signs VALUES (NULL,'8','Gastrointestinal','1');
 
 INSERT INTO signs VALUES (NULL,'UF1','Urinary','1');
 INSERT INTO signs VALUES (NULL,'UF2','Urinary','1');
@@ -290,13 +288,13 @@ INSERT INTO signs VALUES (NULL,'UM2','Urinary','1');
 INSERT INTO signs VALUES (NULL,'UM3','Urinary','1');
 INSERT INTO signs VALUES (NULL,'UM4','Urinary','1');
 
-INSERT INTO signs VALUES (NULL,'N1','Neurology','1');
-INSERT INTO signs VALUES (NULL,'N2','Neurology','1');
-INSERT INTO signs VALUES (NULL,'N3','Neurology','1');
-INSERT INTO signs VALUES (NULL,'N4','Neurology','1');
-INSERT INTO signs VALUES (NULL,'N5','Neurology','1');
-INSERT INTO signs VALUES (NULL,'N6','Neurology','1');
-INSERT INTO signs VALUES (NULL,'N7','Neurology','1');
+INSERT INTO signs VALUES (NULL,'0','Neurology','1');
+INSERT INTO signs VALUES (NULL,'1','Neurology','1');
+INSERT INTO signs VALUES (NULL,'2','Neurology','1');
+INSERT INTO signs VALUES (NULL,'3','Neurology','1');
+INSERT INTO signs VALUES (NULL,'4','Neurology','1');
+INSERT INTO signs VALUES (NULL,'5','Neurology','1');
+INSERT INTO signs VALUES (NULL,'6','Neurology','1');
 
 
 

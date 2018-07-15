@@ -81,6 +81,7 @@ module.exports.routes = {
   'GET /api/v1/querycases/get': { action: 'querycases/get' },
 
   'POST /api/v1/test/post': { action: 'test/post' },
+  'POST /api/v1/referralinsert/post': { action: 'referralinsert/post' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
