@@ -64,6 +64,8 @@ module.exports.routes = {
   'GET /api/v1/patients/get': { action: 'patients/fetch' },
   'POST /api/v1/patients/login': { action: 'patients/login' },
   'POST /api/v1/patients/register': { action: 'patients/register' },
+  'GET /api/v1/patients/list': { action: 'patients/list' },
+
 
 
 
@@ -77,7 +79,10 @@ module.exports.routes = {
 
 
   'GET /api/v1/gps/get': { action: 'gps/get' },
-  'GET /api/v1/consultants/get': { action: 'consultants/get' },
+  'GET /api/v1/gps/list': { action: 'gps/list' },
+  'GET /api/v1/consultants/get': { actions: 'consultants/get' },
+  'GET /api/v1/consultants/list': { action: 'consultants/list' },
+
   'GET /api/v1/querycases/get': { action: 'querycases/get' },
 
   'POST /api/v1/test/post': { action: 'test/post' },

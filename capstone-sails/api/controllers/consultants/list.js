@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Get',
+  friendlyName: 'list',
 
 
-  description: 'Get gps.',
+  description: 'list consultant.',
 
 
   inputs: {
@@ -18,7 +18,12 @@ module.exports = {
       type: 'string',
       required: true
     },
-    licenceIdGP: {
+    consultantEmail: {
+      description: 'a',
+      type: 'string',
+      required: true
+    },
+    licenceIdConsultant: {
       description: 'licenceID',
       type: 'string',
       required: true
@@ -52,25 +57,22 @@ module.exports = {
 
         var _ =require('lodash');
 
-        const { email, password} = inputs;
-        //console.log(DOB)
-        const GPS_GET = 'select * from gps WHERE email = \'' + email +'\' AND password = \''+ password + '\'' ;
-        const rawGP = await sails.sendNativeQuery(GPS_GET);
-        console.log(i);
-
-        // if (i=0){
-        //   const GPS_CASES = 'call query_case()';
-        //   const rawGPCases =  await sails.sendNativeQuery(GPS_CASES);
-        //
-        // }
-        // const GPS_QUERY_CASES = 'select * from querycasetbl WHERE licenceIdGP=\'' + licenceIdGP + '\'AND gpEmail = \''+ email +' \''  ;
-        //
-        // const rawQueryGPCases = await sails.sendNativeQuery(GPS_QUERY_CASES);
+        const { email, password, consultantEmail, licenceIdConsultant } = inputs;
 
 
-        if (!_.isEmpty(rawGP.rows)){
+        const CONSULTANTS_CASES = 'call query_case()';
+        const rawConsultantCases =  await sails.sendNativeQuery(CONSULTANTS_CASES);
+
+
+        const CONSULTANT_QUERY_CASES = ' select * from querycasetbl WHERE licenceIdConsultant=\'' + licenceIdConsultant + '\'AND consultantEmail = \''+ consultantEmail +' \''  ;
+
+        const rawQueryConsultantCases = await sails.sendNativeQuery(CONSULTANT_QUERY_CASES);
+
+
+        if (!_.isEmpty(rawQueryConsultantCases.rows)){
           return exits.success({
-            gp_record: rawGP.rows,
+            gp_record: rawConsultantCases.rows,
+            gp_cases: rawQueryConsultantCases.rows,
             status: '200 OK'
           })
 
@@ -89,7 +91,7 @@ module.exports = {
       }
 
 
-  }}
+    }}
 
 
 

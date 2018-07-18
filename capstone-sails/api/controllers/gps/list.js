@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Get',
+  friendlyName: 'list',
 
 
-  description: 'Get gps.',
+  description: 'list gps.',
 
 
   inputs: {
@@ -14,6 +14,11 @@ module.exports = {
       required: true
     },
     password: {
+      description: 'a',
+      type: 'string',
+      required: true
+    },
+    GPEmail: {
       description: 'a',
       type: 'string',
       required: true
@@ -52,25 +57,28 @@ module.exports = {
 
         var _ =require('lodash');
 
-        const { email, password} = inputs;
+        const { email, password, GPEmail, licenceIdGP } = inputs;
         //console.log(DOB)
         const GPS_GET = 'select * from gps WHERE email = \'' + email +'\' AND password = \''+ password + '\'' ;
         const rawGP = await sails.sendNativeQuery(GPS_GET);
         console.log(i);
 
-        // if (i=0){
-        //   const GPS_CASES = 'call query_case()';
-        //   const rawGPCases =  await sails.sendNativeQuery(GPS_CASES);
-        //
-        // }
-        // const GPS_QUERY_CASES = 'select * from querycasetbl WHERE licenceIdGP=\'' + licenceIdGP + '\'AND gpEmail = \''+ email +' \''  ;
-        //
-        // const rawQueryGPCases = await sails.sendNativeQuery(GPS_QUERY_CASES);
+
+        const GPS_CASES = 'call query_case()';
+        const rawGPCases =  await sails.sendNativeQuery(GPS_CASES);
 
 
-        if (!_.isEmpty(rawGP.rows)){
+        //const GPS_QUERY_CASES = 'select * patients';
+
+        const GPS_QUERY_CASES = ' select * from querycasetbl WHERE licenceIdGP=\'' + licenceIdGP + '\'AND GPEmail = \''+ GPEmail +' \''  ;
+
+        const rawQueryGPCases = await sails.sendNativeQuery(GPS_QUERY_CASES);
+
+
+        if (!_.isEmpty(rawQueryGPCases.rows)){
           return exits.success({
-            gp_record: rawGP.rows,
+            gp_record: rawGPCases.rows,
+            gp_cases: rawQueryGPCases.rows,
             status: '200 OK'
           })
 
@@ -89,7 +97,7 @@ module.exports = {
       }
 
 
-  }}
+    }}
 
 
 

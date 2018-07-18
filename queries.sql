@@ -93,18 +93,19 @@ delimiter ;
 -- Query for referral history for patients
 
 call query_case();
-select * from querycasetbl WHERE nric='S9811714J';
+select * from querycasetbl;
+select * from querycasetbl WHERE nric='S9811714J' AND DOB = '1998-05-05';
 
 
 -- Query for referral history for consultants
 call query_case();
-select * from querycasetbl WHERE licenceIdConsultant='123456789' AND consultantEmail;
+select * from querycasetbl WHERE licenceIdConsultant='123456789' AND consultantEmail= 'kevintan@nuh.sg';
 
 
 -- Query for referral history for gps
 
 call query_case();
-select * from querycasetbl WHERE licenceIdGP='0897564312'AND gpEmail = 'alantan@nuhs.sg';
+select * from querycasetbl WHERE licenceIdGP='0897564312' AND GPEmail = 'alantan@nuh.sg';
 
 
 
