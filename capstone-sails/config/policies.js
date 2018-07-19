@@ -23,5 +23,6 @@ module.exports.policies = {
   'querycases/*': true,
   'test/*': true,
   'referralinsert/*': true,
+  'register-provider': true
 
 };

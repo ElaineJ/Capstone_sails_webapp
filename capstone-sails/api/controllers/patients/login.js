@@ -28,26 +28,29 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    const {
-      NRIC,
-      DOB
-    } = inputs;
 
+    const NRIC = inputs.NRIC.toLowerCase();
+    const DOB = inputs.DOB.toLowerCase();
     // TODO query in DB for a specific email address
     // Then, take the
 
-    const queryResults = {patient: {}}
+    const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND DOB = \''+ DOB + '\'' ;
+    const queryResults = await sails.sendNativeQuery(PATIENTS_GET);
 
-    if (!_.isEmpty(queryResults.rows)){
+    if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1){
+      const patientData = queryResults.rows[0];
       return exits.success({
-        patient: queryResults.patient,
-        status: '200 OK'
+        authData: patientData,
+        error: false,
+        role: 'patient'
       })
 
     }
 
+
     return exits.success({
-      status: '200 Not found'
+      error: true,
+      errorMessage:'Incorrect Credentials'
     });
 
   }

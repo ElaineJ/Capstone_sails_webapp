@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Register',
 
 
-  description: 'Register gps. exactly the same as register consultants',
+  description: 'Register gps.',
 
 
   inputs: {
@@ -72,7 +72,6 @@ module.exports = {
       role,
       licenseNumber
     } = inputs;
-
     const REGISTER_SQL = `
     INSERT INTO gps 
              (gps.licenceIdGP, gps.firstName, gps.lastName, gps.organisation, gps.email, gps.password, gps.number)
@@ -96,5 +95,6 @@ module.exports = {
         errorMessage: "Server returned with error " + errorcode
       })
     }
+
   }
 }

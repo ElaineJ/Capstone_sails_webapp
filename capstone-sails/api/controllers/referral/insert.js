@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Post',
 
 
-  description: 'Post referralinsert.',
+  description: 'Post referral.',
 
 
   inputs: {

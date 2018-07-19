@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Register',
 
 
-  description: 'Register gps. exactly the same as register consultants',
+  description: 'Register consultants.',
 
 
   inputs: {
@@ -72,15 +72,14 @@ module.exports = {
       role,
       licenseNumber
     } = inputs;
-
     const REGISTER_SQL = `
-    INSERT INTO gps 
-             (gps.licenceIdGP, gps.firstName, gps.lastName, gps.organisation, gps.email, gps.password, gps.number)
-    VALUES ( $1,          $2,        $3,       $4,          $5,     $6,       $7);
+    INSERT INTO consultants 
+             (consultants.licenceIdConsultant, consultants.firstName, consultants.lastName, consultants.organisation, consultants.email, consultants.password, consultants.number, consultants.scheduler)
+    VALUES ( $1,          $2,        $3,       $4,          $5,     $6,       $7, $8);
     `
 
     try {
-      const rawResult = await sails.sendNativeQuery(REGISTER_SQL, [licenseNumber, firstName, lastName, organization, email, password, contact]);
+      const rawResult = await sails.sendNativeQuery(REGISTER_SQL, [licenseNumber, firstName, lastName, organization, email, password, contact, 1]);
 
       const random = Math.random() * (9999999 - 1000000) + 1000000
       sails.log("raw result = " + JSON.stringify(rawResult, null, 2))

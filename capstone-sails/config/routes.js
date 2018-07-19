@@ -71,12 +71,17 @@ module.exports.routes = {
 
   // GPs
   'POST /api/v1/gps/login': { action: 'gps/login' },
-  'POST /api/v1/provider/register': { action: 'register-provider' },
+  'POST /api/v1/gps/register': { action: 'gps/register' },
+
+  //'POST /api/v1/provider/register': { action: 'register-provider' },
 
 
   // Consultants
   'POST /api/v1/consultants/login': { action: 'consultants/login' },
+  'POST /api/v1/consultants/register': { action: 'consultants/register' },
 
+  // referrals
+  'POST /api/v1/referral/submit': { action: 'referral/insert' },
 
   'GET /api/v1/gps/get': { action: 'gps/get' },
   'GET /api/v1/gps/list': { action: 'gps/list' },
@@ -84,9 +89,6 @@ module.exports.routes = {
   'GET /api/v1/consultants/list': { action: 'consultants/list' },
 
   'GET /api/v1/querycases/get': { action: 'querycases/get' },
-
-  'POST /api/v1/test/post': { action: 'test/post' },
-  'POST /api/v1/referralinsert/post': { action: 'referralinsert/post' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
