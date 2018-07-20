@@ -19,9 +19,11 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    var _ =require('lodash');
+    const _ =require('lodash');
 
-    var obj = {
+    // ================================= BEGIN TEST =========================
+    // test object
+    const obj = {
       "patient_record": {
         "nric": "S9512721E",
         "firstName": "Jacob",
