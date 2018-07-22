@@ -49,7 +49,7 @@ module.exports = {
     default: {
 
       adapter: require('sails-mysql'),
-      url: 'mysql://root:password@localhost:3306/CapstoneDB',
+      url: 'mysql://capstoneAdmin:ConsultantsPW@capstonedb.cuttplbhsdmi.us-east-2.rds.amazonaws.com:3306/Capstone_DB',
       migrate: 'alter',
       // adapter: 'sails-mysql',
       // url: 'mysql://user:password@host:port/database',
