@@ -12,6 +12,7 @@
     "async": "2.0.1",
     "bcrypt": "^3.0.0",
     "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "sails": "^1.0.2",
     "sails-hook-apianalytics": "^2.0.0",
     "sails-hook-organics": "^0.14.5",
