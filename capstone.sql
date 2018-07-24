@@ -1,4 +1,4 @@
-USE CapstoneDB;
+USE Capstone_DB;
 
 CREATE TABLE user (
 	createdAt DATETIME,
@@ -45,6 +45,9 @@ SELECT * FROM patients WHERE patients.nric = 'S9811714J' AND patients.DOB = '199
 INSERT INTO patients VALUES ('S9811714J', 'John', 'Tan','1998-05-05','Penicillin','patient had been hospitalise for asthma attack','M',  'No');
 INSERT INTO patients VALUES ('S9911821P', 'James', 'Tan','1999-08-05','Penicillin',NULL,'M',  'No');
 INSERT INTO patients VALUES ('S9512721E', 'Jacob', 'Tan','1995-09-05','Penicillin','patient had history of asthma','M',  'No');
+INSERT INTO patients VALUES('Aaa', 'Test', 'User', '2018-07-23', 'Penicillin', 'patient is FAKE NEWS', 'M', 'No');
+INSERT INTO patients VALUES('A', 'Test', 'User', '2018-07-24', 'Penicillin', 'patient is FAKE NEWS', 'M', 'No');
+INSERT INTO patients VALUES('a', 'Test', 'User', '2018-07-24', 'Penicillin', 'patient is FAKE NEWS', 'M', 'No');
 
 -- DELIMITER $$
 -- CREATE DEFINER = 'root'@'localhost' PROCEDURE `sp_pat_get`(v_nric VARCHAR(15))
@@ -133,6 +136,7 @@ CREATE TABLE gps (
 
 INSERT INTO gps VALUES ('0987654321', 'Matt', 'Tan','NUH','matttan@nuh.sg','matttan',  '90909090');
 INSERT INTO gps VALUES ('0897564312', 'Alan', 'Tan','NUH','alantan@nuh.sg','alantan',  '90909091');
+INSERT INTO gps values('123', 'Test', 'GP', 'NUH', 'test', 'testGP', '1234567');
 
 SELECT * FROM gps;
 SELECT * FROM gps WHERE email = 'alantan@nuh.sg' AND password = 'alantan';
@@ -151,6 +155,7 @@ CREATE TABLE consultants (
 );
 
 INSERT INTO consultants VALUES ('123456789', 'Kevin', 'Tan','NUH','kevintan@nuh.sg','kevintan',  '90900088',TRUE);
+INSERT INTO consultants VALUES ('987654321', 'Test', 'Consultant', 'NUH', 'test@cons', 'testCons', '9876543', TRUE);
 SELECT * FROM consultants;
 SELECT * FROM consultants WHERE consultants.email = 'matttan@nuh.sg' AND consultants.password = 'matttan';
 
