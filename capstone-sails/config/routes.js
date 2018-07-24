@@ -82,6 +82,8 @@ module.exports.routes = {
 
   // referrals
   'POST /api/v1/referral/submit': { action: 'referral/insert' },
+  'POST /api/v1/referral/secondsubmit': { action: 'referral/secondInsert' },
+  'POST /api/v1/referral/new-insert': { action: 'referral/new-insert' },
 
   'GET /api/v1/gps/get': { action: 'gps/get' },
   'GET /api/v1/gps/list': { action: 'gps/list' },

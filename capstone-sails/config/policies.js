@@ -21,8 +21,9 @@ module.exports.policies = {
   'gps/*': true,
   'consultants/*': true,
   'querycases/*': true,
+  'referral/*': true,
   'test/*': true,
   'referralinsert/*': true,
-  'register-provider': true
+  'register-provider': true,
 
 };

@@ -8,14 +8,13 @@ module.exports = {
 
 
   inputs: {
-    nric: {
-      description: "the NRIC  number",
+    NRIC: {
+      description: 'The ID of the user to look up.',
       type: 'string',
       required: true
     },
-
     DOB: {
-      description: 'the Date of Birth',
+      description: 'a',
       type: 'string',
       required: true
     }
@@ -41,54 +40,100 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
+    try{
 
-    for (var i = 0; i < 4; i += 1) {
+      var _ =require('lodash');
 
-      try{
+      const { NRIC, DOB } = inputs;
+      sails.log(NRIC, DOB);
+      await sails.sendNativeQuery('DROP TEMPORARY TABLE IF EXISTS querycasetbl');
 
-        var _ =require('lodash');
+      const PATIENTS_GET = 'select * from patients WHERE NRIC = \'' + NRIC +'\' AND DOB = \''+ DOB + '\'' ;
+      const rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
 
-        const { nric, DOB } = inputs;
-        //console.log(DOB)
-        // const GPS_GET = 'select * from gps WHERE email = \'' + email +'\' AND password = \''+ password + '\'' ;
-        // const rawGP = await sails.sendNativeQuery(GPS_GET);
-        // console.log(i);
+      const PATIENTS_CASES = 'call query_cases()';
+      const PATIENTS_QUERY_CASES = 'select * from querycasetbl WHERE NRIC=\'' + NRIC + '\'';
+      const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
+      sails.log(JSON.stringify(rawPatientCases));
+      const rawQueryPatientCases = await sails.sendNativeQuery(PATIENTS_QUERY_CASES);
 
+      sails.sendNativeQuery('DROP TEMPORARY TABLE querycasetbl');
 
-        const GPS_CASES = 'call query_case()';
-        const rawGPCases =  await sails.sendNativeQuery(GPS_CASES);
+      const patientRecord = rawPatients.rows;
+      const queryPatientCaseRow = rawQueryPatientCases.rows;
+      const caseId = Object.values(queryPatientCaseRow[0])[0];
+      //const system = Object.values(queryPatientCaseRow[0])[20];
 
+      const parameters={
+        Temperature:String(Object.values(queryPatientCaseRow[0])[12]),
+        Systole: String(Object.values(queryPatientCaseRow[0])[13]),
+        Diastole: String(Object.values(queryPatientCaseRow[0])[14]),
+        Blood_Pressure: String(Object.values(queryPatientCaseRow[0])[15])
 
-        //const GPS_QUERY_CASES = 'select * patients';
+      };
 
-        const GPS_QUERY_CASES = ' select * from querycasetbl WHERE nric=\'' + nric + '\'AND DOB = \''+ DOB +' \''  ;
+      const accessSymptom= {
+        Symptoms:Object.values(queryPatientCaseRow[0])[21]
 
-        const rawQueryGPCases = await sails.sendNativeQuery(GPS_QUERY_CASES);
+      };
+      const accessSigns={
+        Signs: Object.values(queryPatientCaseRow[0])[22]
 
+      };
 
-        if (!_.isEmpty(rawQueryGPCases.rows)){
-          return exits.success({
-            gp_record: rawGPCases.rows,
-            gp_cases: rawQueryGPCases.rows,
-            status: '200 OK'
-          })
+      const investigations = {
+        Full_Blood_Count: Object.values(queryPatientCaseRow[0])[16],
+        PTT: Object.values(queryPatientCaseRow[0])[17],
+        UCEr: Object.values(queryPatientCaseRow[0])[18],
+        Liver_Function_Test:Object.values(queryPatientCaseRow[0])[19]
+      };
 
+      const cases = {
+        parameters: parameters,
+        symptoms: accessSymptom,
+        signs: accessSigns,
+        investigations: investigations,
+        additionalInformation: Object.values(queryPatientCaseRow[0])[23]
+      };
 
+      const doctorInformation = {
+        Name: Object.values(queryPatientCaseRow[0])[7],
+        GPClinic: Object.values(queryPatientCaseRow[0])[8],
+        LicenceIdGP: Object.values(queryPatientCaseRow[0])[9],
+        GPEmail: Object.values(queryPatientCaseRow[0])[10],
+        GPPhoneNumber: Object.values(queryPatientCaseRow[0])[11],
+      };
 
-        }
-        return exits.success({
-          status: '200 General Practitioner Not Found'
-        });
+      const payload = {
+        caseId: caseId,
+        patient: patientRecord[0],
+        case: cases,
+        referringDoctor: doctorInformation,
+        createdAt: Date.now(),
+
+        status: '200 OK'
+      }
+      if (!_.isEmpty(patientRecord) && _.size(patientRecord) === 1){
+        return exits.success(payload)
 
       }
-      catch(err){
-        console.log(err);
-        return exits.success();
-
-      }
+      return exits.success({
+        status: '200 Patient Not Found'
+      });
 
 
-    }}
+
+
+
+    }
+    catch(err){
+      console.log(err);
+      return exits.success({
+        error: err
+      });
+    }
+
+  }
 
 
 

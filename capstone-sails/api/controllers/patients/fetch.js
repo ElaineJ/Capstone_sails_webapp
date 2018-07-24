@@ -34,7 +34,7 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    const NRIC = inputs.NRIC.toLowerCase();
+    const NRIC = inputs.NRIC;
     const dateNormalizer = require('../../services/normalizeDate');
     const DOB = dateNormalizer.normalize(inputs.DOB);
 

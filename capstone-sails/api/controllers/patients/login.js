@@ -29,8 +29,9 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    const NRIC = inputs.NRIC.toLowerCase();
-    const DOB = inputs.DOB.toLowerCase();
+    const NRIC = inputs.NRIC;
+    const dateNormalizer = require('../../services/normalizeDate');
+    const DOB = dateNormalizer.normalize(inputs.DOB);
     // TODO query in DB for a specific email address
     // Then, take the
 

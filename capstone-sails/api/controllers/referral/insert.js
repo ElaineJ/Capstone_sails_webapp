@@ -131,7 +131,7 @@ module.exports = {
 
     const insertCase = await sails.sendNativeQuery(INSERT_CASE_RECORD);
 
-    // // ----------- MATCH CASE TO SYMPOTOM -----------------
+    // // ----------- MATCH CASE TO SYMPTOM -----------------
 
     var symptoms = [24,25,26,27];
     var symptomsLength = symptoms.length;
@@ -145,6 +145,7 @@ module.exports = {
 
     var signs = [24,25,26,27];
     var signsLength = signs.length;
+
     for (var i = 0; i < signsLength; i++) {
       var INSERT_SIGN = "\'"+caseId+"\'" +','+"\'"+signs[i]+"\'"
       const INSERT_CASE_SIGN = "INSERT INTO caseSign VALUES ("+ INSERT_SIGN +")";
