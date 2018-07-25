@@ -53,14 +53,14 @@ GROUP BY cases.caseId ORDER BY Score DESC, appointmentTime ASC;
 
 delimiter $$
 
-CREATE PROCEDURE query_case()
+CREATE PROCEDURE query_cases()
 BEGIN 
 DROP TABLE IF EXISTS querycasetbl;
 CREATE TEMPORARY TABLE querycasetbl 
 SELECT cases.caseId, GROUP_CONCAT(DISTINCT patients.firstName, ' ', patients.lastName)patientName, cases.nric, GROUP_CONCAT(DISTINCT patients.DOB)DOB, GROUP_CONCAT(DISTINCT patients.allergies)allergies,
 GROUP_CONCAT(DISTINCT patients.medicalHistory)medicalHistory, GROUP_CONCAT(DISTINCT patients.gender)gender, GROUP_CONCAT(DISTINCT gps.firstName, ' ', gps.lastName)GPName, GROUP_CONCAT(DISTINCT gps.organisation)GPClinic,cases.licenceIdGP, GROUP_CONCAT(DISTINCT gps.email)GPEmail, GROUP_CONCAT(DISTINCT gps.number)GPPhoneNumber, 
 cases.temperature, cases.systole, cases.diastole, cases.bp, cases.fullBloodCount, cases.ptt, cases.UECr, cases.liverFunctionTest, GROUP_CONCAT(DISTINCT symptoms.system)system,
-GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,
+GROUP_CONCAT(distinct symptom SEPARATOR ', ')symptoms, GROUP_CONCAT(distinct signs.sign SEPARATOR ', ')signs,GROUP_CONCAT(distinct symptoms.symptomId SEPARATOR ', ')symptomsId, GROUP_CONCAT(distinct signs.signId SEPARATOR ', ')signsId,
 cases.additionalInfo, GROUP_CONCAT(DISTINCT consultants.firstName, ' ',consultants.lastName)consultantName, cases.licenceIdConsultant, GROUP_CONCAT(DISTINCT consultants.email)consultantEmail,GROUP_CONCAT(DISTINCT consultants.number)consultantPhoneNumber, cases.assigned, cases.appointmentTime,
 (SUM(symptoms.symptomScore)*COUNT(DISTINCT symptoms.symptomId)/COUNT(*)+SUM(signs.signScore)*COUNT(DISTINCT signs.signId)/COUNT(*))totalSeverityScore
 FROM cases
@@ -92,25 +92,24 @@ delimiter ;
 
 -- Query for referral history for patients
 
-call query_case();
-select * from querycasetbl;
+call query_cases();
 select * from querycasetbl WHERE nric='S9811714J' AND DOB = '1998-05-05';
 
 
 -- Query for referral history for consultants
-call query_case();
+call query_cases();
 select * from querycasetbl WHERE licenceIdConsultant='123456789' AND consultantEmail= 'kevintan@nuh.sg';
 
 
 -- Query for referral history for gps
 
-call query_case();
+call query_cases();
 select * from querycasetbl WHERE licenceIdGP='0897564312' AND GPEmail = 'alantan@nuh.sg';
 
 
 
 DROP TABLE IF EXISTS querycasetbl;
-DROP procedure query_case;
+DROP procedure query_cases;
 DROP table querycasetbl;
 
 

@@ -85,13 +85,13 @@ module.exports = {
         const signs = fullCase.signs;
 
         const {
-          FBC,
+          fullBloodCount,
           ptt,
           UECr,
           liverFunctionTest
         } = fullCase;
         const investigations = {
-          FBC,
+          fullBloodCount,
           ptt,
           UECr,
           LFT: liverFunctionTest
