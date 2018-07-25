@@ -50,6 +50,7 @@ module.exports.datastores = {
     ***************************************************************************/
 
     adapter: 'sails-mysql',
+
     //url: 'mysql://capstoneAdmin:ConsultantsPW@capstonedb.cuttplbhsdmi.us-east-2.rds.amazonaws.com:3306/Capstone_DB',
     url: 'mysql://root:Asdf1234!@localhost:3306/CapstoneDB'
    // url: 'mysql://root:password@localhost:3306/CapstoneDB'

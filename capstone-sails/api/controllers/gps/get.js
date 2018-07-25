@@ -18,11 +18,11 @@ module.exports = {
       type: 'string',
       required: true
     },
-    licenceIdGP: {
-      description: 'licenceID',
-      type: 'string',
-      required: true
-    },
+    // licenceIdGP: {
+    //   description: 'licenceID',
+    //   type: 'string',
+    //   required: true
+    // },
 
   },
 
