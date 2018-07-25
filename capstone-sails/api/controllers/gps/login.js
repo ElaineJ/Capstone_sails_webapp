@@ -43,6 +43,7 @@ module.exports = {
     sails.log("Trying query")
     const queryResults = await sails.sendNativeQuery(GPS_LOGIN);
     sails.log("query finished with ", queryResults.rows)
+
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1) {
       const gpData = queryResults.rows[0];
       sails.log("Found gp data " + gpData);

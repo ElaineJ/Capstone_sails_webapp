@@ -8,6 +8,10 @@ module.exports = {
 
 
   inputs: {
+    NRIC: {
+      type: 'string',
+      required: true
+    },
     firstName: {
       description: "patient's first name",
       type: 'string',
@@ -16,6 +20,10 @@ module.exports = {
 
     lastName: {
       description: "patient's last name",
+      type: 'string',
+      required: true
+    },
+    DOB: {
       type: 'string',
       required: true
     },
@@ -31,6 +39,9 @@ module.exports = {
     medicalHistories: {
       description: "JSON collection object of medical histories",
       type: "JSON"
+    },
+    isOverseas: {
+      type: 'boolean'
     }
   },
 
@@ -42,21 +53,39 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     const {
+      NRIC,
       firstName,
       lastName,
+      DOB,
       gender,
       drugAllergies,
-      medicalHistories
+      medicalHistories,
+
     } = inputs;
+    const isOverseas = input.isOverseas ? inputs.isOverseas :false;
+    // nric, firstName, lastName, DOB, allergies, medicalHistory, gender, isOverseas
+    const INSERT_PATIENT_QUERY = `
+    INSERT INTO patients VALUES (
+    $1, $2, $3, $4, $5, $6, $7, $8
+    )
+    `
+    const queryResults = await sails.sendNativeQuery(INSERT_PATIENT_QUERY, [
+      NRIC, firstName, lastName, DOB, gender, drugAllergies, medicalHistories, isOverseas
+    ]);
 
-    // TODO insert if not exist into patients database
-    // TODO return if success or fail
-
-    const queryResults = {}
 
     if (queryResults) {
+      const patientData = {
+        NRIC: NRIC,
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        DOB: DOB
+      };
+
       return exits.success({
-        status: "200 inserted successfully"
+        status: "200 inserted successfully",
+        patientData: patientData
       })
     }
 
