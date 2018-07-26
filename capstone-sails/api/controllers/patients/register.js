@@ -30,7 +30,7 @@ module.exports = {
     gender: {
       description: "Male or Female",
       type: 'string',
-      isIn: ['male', 'female']
+      isIn: ['M', 'F']
     },
     drugAllergies: {
       description: "JSON collection object of Drug allergies",
@@ -62,8 +62,9 @@ module.exports = {
       medicalHistories,
 
     } = inputs;
-    const isOverseas = input.isOverseas ? inputs.isOverseas :false;
-    // nric, firstName, lastName, DOB, allergies, medicalHistory, gender, isOverseas
+    sails.log("GENDER = " + gender)
+    const isOverseas = inputs.isOverseas ? inputs.isOverseas :false;
+    // nric, first_name, last_name, dob, allergy, medical_history, gender, is_overseas
     const INSERT_PATIENT_QUERY = `
     INSERT INTO patients 
     (patients.nric, patients.first_name, patients.last_name, patients.dob, patients.allergy, patients.medical_history,
@@ -72,7 +73,7 @@ module.exports = {
     ($1, $2, $3, $4, $5, $6, $7, $8)
     `
     const queryResults = await sails.sendNativeQuery(INSERT_PATIENT_QUERY, [
-      NRIC, firstName, lastName, DOB, gender, drugAllergies, medicalHistories, isOverseas
+      NRIC, firstName, lastName, DOB, drugAllergies, medicalHistories, gender, isOverseas
     ]);
 
 

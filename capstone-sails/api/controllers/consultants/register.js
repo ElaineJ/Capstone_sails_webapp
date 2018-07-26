@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'insertNew',
+  friendlyName: 'RegisterConsultant',
 
 
-  description: 'Inserts a new referral to the database.',
+  description: 'Register a new consultant into the database.',
 
 
   inputs: {

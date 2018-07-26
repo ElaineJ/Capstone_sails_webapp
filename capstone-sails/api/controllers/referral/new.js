@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'secondPost',
+  friendlyName: 'InsertNew',
 
 
-  description: 'Post referral.',
+  description: 'Insert new referral into the database.',
 
 
   inputs: {
