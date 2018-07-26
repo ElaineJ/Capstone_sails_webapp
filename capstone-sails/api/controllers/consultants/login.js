@@ -39,13 +39,13 @@ module.exports = {
     const password = inputs.password;
     // ails.log("Loggin in as GP with " + email + password);
 
-    const GPS_LOGIN = 'select * from consultants WHERE email = \'' + email + '\' AND password = \'' + password + '\'';
+    const GPS_LOGIN = 'select * from consultants WHERE email = \'' + email + '\' AND hashed_password = \'' + password + '\'';
     const queryResults = await sails.sendNativeQuery(GPS_LOGIN);
 
 
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1) {
       const consultantData = queryResults.rows[0];
-      sails.log("Found consultant data" + consultantData);
+      //sails.log("Found consultant data" + consultantData);
       return exits.success({
         authData: consultantData,
         error: false,

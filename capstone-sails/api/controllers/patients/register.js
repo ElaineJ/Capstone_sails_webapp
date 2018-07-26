@@ -65,9 +65,11 @@ module.exports = {
     const isOverseas = input.isOverseas ? inputs.isOverseas :false;
     // nric, firstName, lastName, DOB, allergies, medicalHistory, gender, isOverseas
     const INSERT_PATIENT_QUERY = `
-    INSERT INTO patients VALUES (
-    $1, $2, $3, $4, $5, $6, $7, $8
-    )
+    INSERT INTO patients 
+    (patients.nric, patients.first_name, patients.last_name, patients.dob, patients.allergy, patients.medical_history,
+    patients.gender, patients.is_overseas)
+    VALUES 
+    ($1, $2, $3, $4, $5, $6, $7, $8)
     `
     const queryResults = await sails.sendNativeQuery(INSERT_PATIENT_QUERY, [
       NRIC, firstName, lastName, DOB, gender, drugAllergies, medicalHistories, isOverseas
@@ -76,11 +78,11 @@ module.exports = {
 
     if (queryResults) {
       const patientData = {
-        NRIC: NRIC,
-        firstName: firstName,
-        lastName: lastName,
+        nric: NRIC,
+        first_name: firstName,
+        last_name: lastName,
         gender: gender,
-        DOB: DOB
+        dob: DOB
       };
 
       return exits.success({

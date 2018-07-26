@@ -59,7 +59,7 @@ module.exports = {
 
         const { email, password, GPEmail, licenceIdGP } = inputs;
         //console.log(DOB)
-        const GPS_GET = 'select * from gps WHERE email = \'' + email +'\' AND password = \''+ password + '\'' ;
+        const GPS_GET = 'select * from gps WHERE email = \'' + email +'\' AND hashed_password = \''+ password + '\'' ;
         const rawGP = await sails.sendNativeQuery(GPS_GET);
         console.log(i);
 

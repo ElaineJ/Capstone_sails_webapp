@@ -14,7 +14,8 @@ BEGIN
 DROP TEMPORARY TABLE IF EXISTS temp_table_cases;
 CREATE TEMPORARY TABLE temp_table_cases 
 SELECT cases.case_id, 
-  GROUP_CONCAT(DISTINCT patients.first_name, ' ', patients.last_name)patient_name, cases.nric, 
+  GROUP_CONCAT(DISTINCT patients.first_name, ' ', patients.last_name)patient_name, 
+  cases.nric, 
   GROUP_CONCAT(DISTINCT patients.dob)dob, 
   GROUP_CONCAT(DISTINCT patients.allergy)allergy,
   GROUP_CONCAT(DISTINCT patients.medical_history)medical_history, 
@@ -23,7 +24,7 @@ SELECT cases.case_id,
   GROUP_CONCAT(DISTINCT gps.organisation)gp_clinic,
   cases.licence_id_gp, 
   GROUP_CONCAT(DISTINCT gps.email)gp_email, 
-  GROUP_CONCAT(DISTINCT gps.number)gp_number, 
+  GROUP_CONCAT(DISTINCT gps.contact_number)gp_contact_number, 
   cases.temperature, 
   cases.systole, 
   cases.diastole, 
@@ -41,7 +42,7 @@ SELECT cases.case_id,
   GROUP_CONCAT(DISTINCT consultants.first_name, ' ',consultants.last_name)consultant_name, 
   cases.licence_id_consultant, 
   GROUP_CONCAT(DISTINCT consultants.email)consultant_email,
-  GROUP_CONCAT(DISTINCT consultants.number)consultant_phone_number, 
+  GROUP_CONCAT(DISTINCT consultants.contact_number)consultant_contact_number, 
   cases.assigned, 
   cases.appointment_time,
   (SUM(symptoms.symptom_score)*COUNT(DISTINCT symptoms.symptom_id)/COUNT(*)+
@@ -92,7 +93,7 @@ SELECT cases.case_id,
   GROUP_CONCAT(DISTINCT gps.first_name, ' ', gps.last_name)gp_name, 
   GROUP_CONCAT(DISTINCT gps.organisation)gp_clinic,cases.licence_id_gp, 
   GROUP_CONCAT(DISTINCT gps.email)gp_email, 
-  GROUP_CONCAT(DISTINCT gps.number)gp_number, 
+  GROUP_CONCAT(DISTINCT gps.contact_number)gp_contact_number, 
   cases.temperature, 
   cases.systole, 
   cases.diastole, 
@@ -107,6 +108,10 @@ SELECT cases.case_id,
   cases.photo, 
   cases.pdf,
   cases.additional_info, 
+  GROUP_CONCAT(DISTINCT consultants.first_name, ' ',consultants.last_name)consultant_name, 
+  cases.licence_id_consultant, 
+  GROUP_CONCAT(DISTINCT consultants.email)consultant_email,
+  GROUP_CONCAT(DISTINCT consultants.contact_number)consultant_contact_number, 
   GROUP_CONCAT(DISTINCT notifications.selection)selection, 
   GROUP_CONCAT(DISTINCT notifications.selection_sent)selection_sent,
   GROUP_CONCAT(DISTINCT notifications.licence_id_consultant)consultant_input,
@@ -168,14 +173,14 @@ delimiter ;
 -- select * from temp_table_notifications WHERE nric='S9811714J' AND dob = '1998-05-05';
 
 -- -- Query for referral history for consultants
-select * from temp_table_notifications WHERE licence_id_consultant='123456789' AND consultant_email= 'kevintan@nuh.sg';
+-- select * from temp_table_notifications WHERE licence_id_consultant='123456789' AND consultant_email= 'kevintan@nuh.sg';
 -- 
 -- -- Query for referral history for gps
 -- 
-call query_notifications();
-select * from temp_table_notifications WHERE licence_id_gp='0897564312' AND gp_email = 'alantan@nuh.sg';
-SELECT * FROM temp_table_notifications;
-
+-- call query_notifications();
+-- select * from temp_table_notifications WHERE licence_id_gp='0897564312' AND gp_email = 'alantan@nuh.sg';
+-- SELECT * FROM temp_table_notifications;
+-- 
 -- ====================== DOWN =========================
 -- 
 -- DROP PROCEDURE query_cases;

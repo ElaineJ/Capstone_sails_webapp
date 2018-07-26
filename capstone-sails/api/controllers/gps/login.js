@@ -38,15 +38,13 @@ module.exports = {
     const password = inputs.password;
     sails.log("Loggin in as GP with " + email + password);
 
-    const GPS_LOGIN = 'select * from gps WHERE email = \'' + email + '\' AND password = \'' + password + '\'';
+    const GPS_LOGIN = 'select * from gps WHERE email = \'' + email + '\' AND hashed_password = \'' + password + '\'';
 
-    sails.log("Trying query")
     const queryResults = await sails.sendNativeQuery(GPS_LOGIN);
-    sails.log("query finished with ", queryResults.rows)
 
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1) {
       const gpData = queryResults.rows[0];
-      sails.log("Found gp data " + gpData);
+      sails.log("GP logged in " + gpData);
       return exits.success({
         authData: gpData,
         error: false,

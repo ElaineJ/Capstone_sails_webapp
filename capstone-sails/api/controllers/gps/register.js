@@ -74,7 +74,7 @@ module.exports = {
     } = inputs;
     const REGISTER_SQL = `
     INSERT INTO gps 
-             (gps.licenceIdGP, gps.firstName, gps.lastName, gps.organisation, gps.email, gps.password, gps.number)
+             (gps.licence_id_gp, gps.first_name, gps.last_name, gps.organisation, gps.email, gps.hashed_password, gps.contact_number)
     VALUES ( $1,          $2,        $3,       $4,          $5,     $6,       $7);
     `
 

@@ -35,12 +35,11 @@ module.exports = {
     // TODO query in DB for a specific email address
     // Then, take the
 
-    const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND DOB = \''+ DOB + '\'' ;
+    const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
     const queryResults = await sails.sendNativeQuery(PATIENTS_GET);
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1){
       const patientData = queryResults.rows[0];
-      const normalizedDate = dateNormalizer.offsetTZ(patientData.DOB)
-      patientData.DOB = normalizedDate
+      patientData.DOB = dateNormalizer.offsetTZ(patientData.DOB);
       return exits.success({
         authData: patientData,
         error: false,

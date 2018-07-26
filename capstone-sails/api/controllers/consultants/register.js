@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Register',
+  friendlyName: 'insertNew',
 
 
-  description: 'Register consultants.',
+  description: 'Inserts a new referral to the database.',
 
 
   inputs: {
@@ -74,7 +74,7 @@ module.exports = {
     } = inputs;
     const REGISTER_SQL = `
     INSERT INTO consultants 
-             (consultants.licenceIdConsultant, consultants.firstName, consultants.lastName, consultants.organisation, consultants.email, consultants.password, consultants.number, consultants.scheduler)
+             (consultants.licence_id_consultant, consultants.first_name, consultants.last_name, consultants.organisation, consultants.email, consultants.hashed_password, consultants.contact_number, consultants.scheduler)
     VALUES ( $1,          $2,        $3,       $4,          $5,     $6,       $7, $8);
     `
 

@@ -48,8 +48,8 @@ CREATE TABLE gps (
     last_name VARCHAR(100),
     organisation VARCHAR(50),
 	email VARCHAR(30),
-	password VARCHAR(30),
-    number INT,
+	hashed_password VARCHAR(30),
+    contact_number INT,
 	is_overseas CHAR(5) CHECK (status="Yes" OR status="No"),
 	PRIMARY KEY(licence_id_gp)
 );
@@ -62,8 +62,8 @@ CREATE TABLE consultants (
     last_name VARCHAR(100),
     organisation VARCHAR(50),
 	email VARCHAR(30),
-	password VARCHAR(30),
-    number INT,
+	hashed_password VARCHAR(30),
+    contact_number INT,
     scheduler BOOLEAN,
 	PRIMARY KEY(licence_id_consultant)
 );
@@ -76,8 +76,8 @@ CREATE TABLE schedulers (
     last_name VARCHAR(100),
     organisation VARCHAR(50),
 	email VARCHAR(30),
-	password VARCHAR(30),
-    number INT,
+	hashed_password VARCHAR(30),
+    contact_number INT,
     confirmation CHAR(1) CHECK (confirmation="Y" or confirmation="N"),
 	PRIMARY KEY(licence_id)
 );

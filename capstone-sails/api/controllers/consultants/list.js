@@ -60,11 +60,11 @@ module.exports = {
         const { email, password, consultantEmail, licenceIdConsultant } = inputs;
 
 
-        const CONSULTANTS_CASES = 'call query_case()';
+        const CONSULTANTS_CASES = 'call query_cases()';
         const rawConsultantCases =  await sails.sendNativeQuery(CONSULTANTS_CASES);
 
 
-        const CONSULTANT_QUERY_CASES = ' select * from querycasetbl WHERE licenceIdConsultant=\'' + licenceIdConsultant + '\'AND consultantEmail = \''+ consultantEmail +' \''  ;
+        const CONSULTANT_QUERY_CASES = ' select * from temp_table_cases WHERE licence_id_consultant=\'' + licenceIdConsultant + '\'AND consultant_email = \''+ consultantEmail +' \''  ;
 
         const rawQueryConsultantCases = await sails.sendNativeQuery(CONSULTANT_QUERY_CASES);
 

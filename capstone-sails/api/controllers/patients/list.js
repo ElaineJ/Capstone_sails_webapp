@@ -49,13 +49,13 @@ module.exports = {
       const DOB = dateNormalizer.normalize(inputs.DOB);
       sails.log(NRIC, DOB);
 
-      const PATIENTS_GET = 'select * from patients WHERE NRIC = \'' + NRIC +'\' AND DOB = \''+ DOB + '\'' ;
+      const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
       const rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
 
       const PATIENTS_CASES = 'call query_cases()';
 
 
-      const PATIENTS_QUERY_CASES = 'select * from querycasestbl WHERE NRIC=\'' + NRIC + '\'';
+      const PATIENTS_QUERY_CASES = 'select * from temp_cable_cases WHERE nric=\'' + NRIC + '\'';
       const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
       const rawQueryPatientCases = await sails.sendNativeQuery(PATIENTS_QUERY_CASES);
 
@@ -67,49 +67,50 @@ module.exports = {
 
       _.forEach(queryPatientCaseRow, function(fullCase) {
         const {
-          caseId,
+          case_id,
           temperature,
           systole,
           diastole,
-          bp
+          blood_pressure
         } = fullCase
 
         const parameters = {
           Temperature: temperature,
           Systole: systole,
           Diastole: diastole,
-          BP: bp
+          BP: blood_pressure
         }
 
         const symptoms = fullCase.symptoms;
         const signs = fullCase.signs;
 
         const {
-          fullBloodCount,
+          full_blood_count,
           ptt,
-          UECr,
-          liverFunctionTest
+          uecr,
+          liver_function_test
         } = fullCase;
+
         const investigations = {
-          fullBloodCount,
+          full_blood_count,
           ptt,
-          UECr,
-          LFT: liverFunctionTest
+          uecr,
+          LFT: liver_function_test
         }
 
-        const additionalInfo = _.pick(fullCase, ["additionalInfo"])
+        const additional_info = _.pick(fullCase, ["additional_info"])
 
         // const referringDoctor = _.pick(fullCase, ['Name', 'GPClinic', 'LicenseIDGP', 'GPEmail', 'GPPhoneNumber'])
         const referringDoctor = {
           Name: "Dr. Dale Lincoln",
         }
         const caseListItem = {
-          caseId,
+          case_id,
           parameters,
           symptoms,
           signs,
           investigations,
-          additionalInfo,
+          additional_info,
           referringDoctor,
           createdAt: "2018-06-6"
         };
