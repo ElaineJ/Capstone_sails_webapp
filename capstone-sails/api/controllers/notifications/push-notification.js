@@ -19,6 +19,9 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
+    const notificationPusher = require("../../services/pushNotification");
+
+
     return exits.success();
 
   }

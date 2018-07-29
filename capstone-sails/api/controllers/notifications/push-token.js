@@ -46,11 +46,15 @@ module.exports = {
 
 
 
-    const INSERT_QUERY = 'UPDATE $1 SET expo_push_token=$2 WHERE $3=$4';
-    sails.log.info("UPDATING TABLE " + tableName + '' + 'WHERE ' + pKey + "= " + identifier);
-    sails.sendNativeQuery(
-      INSERT_QUERY, [tableName, token, pKey, identifier]
+    const UPDATE_QUERY = "UPDATE " + tableName + " SET expo_push_token=$2 WHERE " + pKey + " = $4";
+    const results = await sails.sendNativeQuery(
+      UPDATE_QUERY, [tableName, token, pKey, identifier]
     )
+    // const RAW_UPDATE = "UPDATE " + tableName + ' SET expo_push_token = \'' + token + '\' WHERE ' + pKey + '= \'' + identifier + '\'';
+    // sails.log.info(RAW_UPDATE);
+    // const rawesults = await sails.sendNativeQuery(
+    //   RAW_UPDATE
+    // )
     return exits.success();
 
   }
