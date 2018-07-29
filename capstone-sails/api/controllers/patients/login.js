@@ -32,14 +32,12 @@ module.exports = {
     const NRIC = inputs.NRIC;
     const dateNormalizer = require('../../services/normalizeDate');
     const DOB = dateNormalizer.normalize(inputs.DOB);
-    // TODO query in DB for a specific email address
-    // Then, take the
 
     const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
     const queryResults = await sails.sendNativeQuery(PATIENTS_GET);
 
-    const mailgunService = require("../../services/mailgunService");
-    mailgunService.sendEmail();
+    //const mailgunService = require("../../services/mailgunService");
+    //mailgunService.sendEmail();
 
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1){
       const patientData = queryResults.rows[0];

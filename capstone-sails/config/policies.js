@@ -23,5 +23,6 @@ module.exports.policies = {
   'querycases/*': true,
   'referral/*': true,
   'register-provider': true,
+  'notifications/*': true,
 
 };
