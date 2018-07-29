@@ -37,6 +37,10 @@ module.exports = {
 
     const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
     const queryResults = await sails.sendNativeQuery(PATIENTS_GET);
+
+    const mailgunService = require("../../services/mailgunService");
+    mailgunService.sendEmail();
+
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1){
       const patientData = queryResults.rows[0];
       patientData.DOB = dateNormalizer.offsetTZ(patientData.DOB);

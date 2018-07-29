@@ -22,6 +22,10 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
+    // Do a verification check
+
+
+
     // get params
     sails.log("INPUT RECEIVED AS" + JSON.stringify(inputs, null, 2));
     const patient = inputs.patient;
