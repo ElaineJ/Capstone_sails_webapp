@@ -90,4 +90,12 @@ module.exports.custom = {
   ***************************************************************************/
   // …
 
+  /************************************************
+   *
+   * sendgrid email service api
+   *
+   *
+   **************************************************/
+
+    sendGridSecret: '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'
 };

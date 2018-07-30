@@ -22,9 +22,8 @@ module.exports.policies = {
   'consultants/*': true,
   'querycases/*': true,
   'referral/*': true,
-  'test/*': true,
-  'referralinsert/*': true,
   'register-provider': true,
+  'notifications/*': true,
   'scheduler/*':true,
 
 };

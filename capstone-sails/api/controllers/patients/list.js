@@ -39,15 +39,12 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    sails.log(inputs.NRIC, inputs.DOB)
 
       var _ =require('lodash');
 
       const { NRIC } = inputs;
-      sails.log(NRIC, inputs.DOB);
       const dateNormalizer = require('../../services/normalizeDate');
       const DOB = dateNormalizer.normalize(inputs.DOB);
-      sails.log(NRIC, DOB);
 
       const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
       const rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
@@ -117,12 +114,13 @@ module.exports = {
         output.push(caseListItem);
       });
 
-      const payload = {
-        history: output,
-        status: '200 OK'
-      };
 
-      if (!_.isEmpty(patientRecord)){
+      if (!_.isEmpty(output)){
+        const payload = {
+          history: output,
+          status: '200 OK'
+        };
+        sails.log("Returned " + JSON.stringify(payload))
         return exits.success({
           ...payload,
           error: false

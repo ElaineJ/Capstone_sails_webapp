@@ -47,9 +47,9 @@ module.exports = {
       const consultantData = queryResults.rows[0];
       //sails.log("Found consultant data" + consultantData);
       return exits.success({
-        authData: consultantData,
+        authData: { ...consultantData,
+          role: 'consultant'},
         error: false,
-        role: 'consultant'
       })
     }
 

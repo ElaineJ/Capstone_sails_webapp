@@ -84,12 +84,18 @@ module.exports.routes = {
   'POST /api/v1/consultants/register': { action: 'consultants/register' },
 
   // referrals
-  'POST /api/v1/referral/submit': { action: 'referral/new' },
+  'POST /api/v1/referral/submit': { action: 'referral/submit' },
 
   'GET /api/v1/gps/get': { action: 'gps/get' },
   'GET /api/v1/gps/list': { action: 'gps/list' },
   'GET /api/v1/consultants/get': { actions: 'consultants/get' },
   'GET /api/v1/consultants/list': { action: 'consultants/list' },
+
+
+  // notifications
+  'POST /api/v1/notifications/push-token': { action: 'notifications/push-token' },
+  'POST /api/v1/notifications/push-notification': { action: 'notifications/push-notification' },
+
 
   'GET /api/v1/querycases/get': { action: 'querycases/get' },
 

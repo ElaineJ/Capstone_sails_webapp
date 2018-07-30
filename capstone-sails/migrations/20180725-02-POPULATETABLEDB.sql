@@ -230,6 +230,21 @@ INSERT INTO case_notifications VALUES('10001','101');
 --  NOTE THIS WILL EMPTY ALL CONTENTS OF THAT TABLE! USE WITH CAUTION
 
 -- SET FOREIGN_KEY_CHECKS=0;
--- SELECT Concat('TRUNCATE TABLE ',table_schema,'.',TABLE_NAME, ';') 
--- FROM INFORMATION_SCHEMA.TABLES where  table_schema in ('db1_name','db2_name');
+-- 
+-- TRUNCATE TABLE CapstoneDB.case_consultants;
+-- TRUNCATE TABLE CapstoneDB.case_gps;
+-- TRUNCATE TABLE CapstoneDB.case_notifications;
+-- TRUNCATE TABLE CapstoneDB.case_patients;
+-- TRUNCATE TABLE CapstoneDB.case_signs;
+-- TRUNCATE TABLE CapstoneDB.case_symptoms;
+-- TRUNCATE TABLE CapstoneDB.cases;
+-- TRUNCATE TABLE CapstoneDB.consultants;
+-- TRUNCATE TABLE CapstoneDB.gps;
+-- TRUNCATE TABLE CapstoneDB.notifications;
+-- TRUNCATE TABLE CapstoneDB.patients;
+-- TRUNCATE TABLE CapstoneDB.schedulers;
+-- TRUNCATE TABLE CapstoneDB.signs;
+-- TRUNCATE TABLE CapstoneDB.symptoms;
+-- TRUNCATE TABLE CapstoneDB.users;
+-- 
 -- SET FOREIGN_KEY_CHECKS=1;
