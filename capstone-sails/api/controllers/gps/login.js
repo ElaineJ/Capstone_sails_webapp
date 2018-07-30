@@ -46,9 +46,8 @@ module.exports = {
       const gpData = queryResults.rows[0];
       sails.log("GP logged in " + gpData);
       return exits.success({
-        authData: gpData,
+        authData: { ...gpData, role: 'gp' },
         error: false,
-        role: 'gp'
       })
     }
 

@@ -39,13 +39,7 @@ module.exports = {
     //const mailgunService = require("../../services/mailgunService");
     //mailgunService.sendEmail();
 
-    sails.log("QUERY RESULT" + JSON.stringify(queryResults.rows[0], null, 2));
-    const notificationPusher = require("../../services/pushNotification");
-    const message = {
-      title: queryResults.rows[0].first_name + " Has logged in",
-      body: "BEWARE!"
-    }
-    notificationPusher.pushNewNotification(message, queryResults.rows[0].expo_push_token);
+    // sails.log("QUERY RESULT" + JSON.stringify(queryResults.rows[0], null, 2));
 
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1){
       const patientData = queryResults.rows[0];

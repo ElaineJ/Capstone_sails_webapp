@@ -33,11 +33,11 @@ module.exports = {
     let pKey;
     if (role === 'gp') {
       tableName = 'gps';
-      pKey = 'license_id_gp';
+      pKey = 'licence_id_gp';
     }
     else if (role === 'consultant') {
       tableName = 'consultants';
-      pKey = 'license_id_consultant';
+      pKey = 'licence_id_consultant';
     }
     else if (role === 'patient') {
       tableName = 'patients';
