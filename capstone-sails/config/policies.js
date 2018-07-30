@@ -25,5 +25,6 @@ module.exports.policies = {
   'test/*': true,
   'referralinsert/*': true,
   'register-provider': true,
+  'scheduler/*':true,
 
 };

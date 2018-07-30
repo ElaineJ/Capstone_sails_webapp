@@ -61,7 +61,7 @@ So, while this \`isSuperAdmin\` demarcation might not be the right approach fore
     },
 
     passwordResetTokenExpiresAt: {
-      type: 'number',
+      type: 'string',
       description: 'A JS timestamp (epoch ms) representing the moment when this user\'s `passwordResetToken` will expire (or 0 if the user currently has no such token).',
       example: 1502844074211
     },
@@ -118,7 +118,7 @@ without necessarily having a billing card.`
     },
 
     emailProofTokenExpiresAt: {
-      type: 'number',
+      type: 'string',
       description: 'A JS timestamp (epoch ms) representing the moment when this user\'s `emailProofToken` will expire (or 0 if the user currently has no such token).',
       example: 1502844074211
     },

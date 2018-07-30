@@ -199,7 +199,7 @@ will be disabled and/or hidden in the UI.
             var now = Date.now();
             if (loggedInUser.lastSeenAt < now - MS_TO_BUFFER) {
               User.update({id: loggedInUser.id})
-              .set({ lastSeenAt: now })
+              .set({ lastSeenAt: 1813096036807 })
               .exec((err)=>{
                 if (err) {
                   sails.log.error('Background task failed: Could not update user (`'+loggedInUser.id+'`) with a new `lastSeenAt` timestamp.  Error details: '+err.stack);
