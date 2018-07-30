@@ -25,7 +25,6 @@ module.exports = {
     // Do a verification check
 
 
-
     // get params
     sails.log("INPUT RECEIVED AS" + JSON.stringify(inputs, null, 2));
     const patient = inputs.patient;
@@ -60,12 +59,11 @@ module.exports = {
       INSERT INTO cases VALUES 
       ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19);
     `;
-    sails.log("investigations PTT = " + investigations.PTT,)
 
     try {
       const rawResult = await sails.sendNativeQuery(INSERT_CASE_SQL, [
         randomCaseId,                                            // case_id
-        patient.NRIC,                                            // nric
+        patient.nric,                                            // nric
         role === 'consultant' ? null : licenceId,                // licence_id_gp
         now,                                                     // created_at
         parameters.temperature,                                  // temperature
@@ -85,24 +83,26 @@ module.exports = {
         now                                                      // appointment_time
       ])
 
-      sails.log("successfully created case" + JSON.stringify(rawResult))
+      sails.log("successfully created case" + JSON.stringify(rawResult, null, 2));
       // ======================= MATCH CASE TO SYMPTOM =============
 
-      await Promise.all(symptoms.map( async (id) => {
+      const case_symptom = await Promise.all(symptoms.map( async (id) => {
 
         const INSERT_SYMPTOM = "INSERT INTO case_symptoms VALUES ($1, $2)";
+        sails.log("INSERTING SYMPTOM" + randomCaseId + id);
         const result = await sails.sendNativeQuery(INSERT_SYMPTOM, [randomCaseId, id])
-        sails.log("INSERT SYMPTOMS result" + JSON.stringify(result));
+        sails.log("INSERT SYMPTOMS result " + JSON.stringify(result));
       }))
 
 
-      sails.log("successfully matched symptoms")
+      sails.log("successfully matched symptoms" + case_symptom)
 
       await Promise.all(signs.map( async (id) => {
 
         const INSERT_SIGN = "INSERT INTO case_signs VALUES ($1, $2)";
+        sails.log("INSERTING SIGN " + randomCaseId + id);
         const result = await sails.sendNativeQuery(INSERT_SIGN, [randomCaseId, id])
-        sails.log("INSERT SIGNS result" + JSON.stringify(result));
+        sails.log("INSERT SIGNS result " + JSON.stringify(result));
       }));
 
 
@@ -113,13 +113,13 @@ module.exports = {
         const INSERT_CASE_CONSULTANT = "INSERT INTO case_consultants VALUES ($1, $2)";
         const match = await sails.sendNativeQuery(INSERT_CASE_CONSULTANT, [randomCaseId, licenceId]);
 
-        sails.log("successfully matched GP")
+        sails.log("successfully matched Consultant " + JSON.stringify(match, null, 2))
       } else if (role === "gp") {
         // MATCH CASE TO GP
         const INSERT_CASE_GP = "INSERT INTO case_gps VALUES ($1, $2)";
         const match = await sails.sendNativeQuery(INSERT_CASE_GP, [randomCaseId, licenceId]);
 
-        sails.log("successfully matched GP")
+        sails.log("successfully matched GP " + JSON.stringify(match, null, 2))
       } else {
         throw new Error();
       }
@@ -127,9 +127,9 @@ module.exports = {
       // MATCH CASE TO PATIENT
 
       const INSERT_CASE_PATIENT = "INSERT INTO case_patients VALUES ($1, $2)";
-      const result = await sails.sendNativeQuery(INSERT_CASE_PATIENT, [randomCaseId, patient.NRIC]);
+      const result = await sails.sendNativeQuery(INSERT_CASE_PATIENT, [randomCaseId, patient.nric]);
 
-      sails.log("successfully matched Patient")
+      sails.log("successfully matched Patient " + JSON.stringify(result, null, 2))
       sails.log("INSERT FINISHED WITH CASE ID, "  + randomCaseId);
 
       const notificationPusher = require("../../services/pushNotification");

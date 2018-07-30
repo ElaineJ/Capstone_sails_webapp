@@ -17,7 +17,6 @@ const request = require('request');
 module.exports = {
 
   async getAssociatedPushToken(identifier, role) {
-    sails.log.info("IDENTIFIER PUSH TOKEN = " + identifier + "  ROLE = " + role);
     switch(role) {
       case "gp":
 
@@ -54,8 +53,6 @@ module.exports = {
       ...config,
       body: payload
     };
-
-    console.log("CONTENTS = " + JSON.stringify(mergedConfig, null, 2));
     function callback(error, response, body) {
       if (!error && response.statusCode === 200) {
       }

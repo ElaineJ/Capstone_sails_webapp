@@ -26,7 +26,6 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    sails.log(JSON.stringify(inputs, null, 2))
     const {identifier, role, token} = inputs;
 
     let tableName;
