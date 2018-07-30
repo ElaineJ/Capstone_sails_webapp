@@ -63,6 +63,7 @@ module.exports.bootstrap = async function(done) {
     { emailAddress: 'nuhsadmin@nuhs.com', fullName: 'Dale Loh', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('nuhs123') },
   ]);
 
+
   // Save new bootstrap version
   await sails.helpers.fs.writeJson.with({
     destination: bootstrapLastRunInfoPath,

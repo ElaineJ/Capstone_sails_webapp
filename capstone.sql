@@ -1,8 +1,8 @@
-USE Capstone_DB;
+USE CapstoneDB;
 
 CREATE TABLE user (
-	createdAt DATETIME,
-    updatedAt DATETIME,
+	createdAt INT,
+    updatedAt INT,
     id INT,
 	emailAddress VARCHAR(100),
     password VARCHAR(50),
@@ -18,15 +18,15 @@ CREATE TABLE user (
     billingCardExpYear VARCHAR (100),
     emailProofToken VARCHAR(100),
     emailProofTokenExpiresAt VARCHAR(100),
-    emailStatus BOOLEAN,
+    emailStatus VARCHAR(150),
     emailChangeCandidate VARCHAR(100),
     tosAcceptedByIp VARCHAR(100),
-    lastSeenAt DATETIME,
+    lastSeenAt INT,
     PRIMARY KEY (id)
 );
 SELECT * FROM user;
-INSERT INTO user VALUES ('2018-06-10 10:30:59', '2018-06-18 10:30:59', '101010', 'nuhsadmin@nuhs.com',MD5('nuhs123'), 'Dr Dale Loh',
-TRUE,'','','',FALSE,'','','','','','',TRUE,'','','2018-06-10 10:30:59');
+INSERT INTO user VALUES (15028440, 15028440, '101010', 'nuhsadmin@nuhs.com',MD5('nuhs123'), 'Dr Dale Loh',
+TRUE,'','','',FALSE,'','','','','','','confirmed','','',15028440);
 DROP TABLE user;
 
 CREATE TABLE patients (
@@ -48,6 +48,7 @@ INSERT INTO patients VALUES ('S9512721E', 'Jacob', 'Tan','1995-09-05','Penicilli
 INSERT INTO patients VALUES('Aaa', 'Test', 'User', '2018-07-23', 'Penicillin', 'patient is FAKE NEWS', 'M', 'No');
 INSERT INTO patients VALUES('A', 'Test', 'User', '2018-07-24', 'Penicillin', 'patient is FAKE NEWS', 'M', 'No');
 INSERT INTO patients VALUES('a', 'Test', 'User', '2018-07-24', 'Penicillin', 'patient is FAKE NEWS', 'M', 'No');
+INSERT INTO patients VALUES('B', 'Test', 'User', '2015-07-18', 'Penicillin', 'patient is FAKE NEWS', 'M', 'No');
 
 -- DELIMITER $$
 -- CREATE DEFINER = 'root'@'localhost' PROCEDURE `sp_pat_get`(v_nric VARCHAR(15))

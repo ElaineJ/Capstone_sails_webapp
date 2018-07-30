@@ -24,5 +24,6 @@ module.exports.policies = {
   'referral/*': true,
   'register-provider': true,
   'notifications/*': true,
+  'scheduler/*':true,
 
 };
