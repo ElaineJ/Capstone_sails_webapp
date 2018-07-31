@@ -63,56 +63,31 @@ module.exports = {
       const output = [];
 
       _.forEach(queryPatientCaseRow, function(fullCase) {
-        console.log("FULL CASE" + JSON.stringify(fullCase, null, 2))
-        const {
-          case_id,
-          temperature,
-          systole,
-          diastole,
-          heart_rate
-        } = fullCase
+        // _.drop(fullCase, ['nric', 'dob'])
 
-        const parameters = {
-          Temperature: temperature,
-          Systole: systole,
-          Diastole: diastole,
-          BP: heart_rate
-        }
+        // process symptoms and signs
+        const symptoms = _.compact(_.split(fullCase.symptoms_id, ",").map(function(item) {
+            return parseInt(item, 10);
+          }));
+        const signs = _.compact(_.split(fullCase.signs_id, ",").map(function(item) {
+          return parseInt(item, 10);
+        }));
 
-        const symptoms = fullCase.symptoms;
-        const signs = fullCase.signs;
-
-        const {
-          full_blood_count,
-          ptt,
-          uecr,
-          liver_function_test
-        } = fullCase;
+        _.drop(fullCase, ['symptoms_id', 'signs_id']);
 
         const investigations = {
-          full_blood_count,
-          ptt,
-          uecr,
-          LFT: liver_function_test
+          full_blood_count: fullCase.full_blood_count,
+          ptt: fullCase.ptt,
+          uecr: fullCase.uecr,
+          liver_function_test: fullCase.liver_function_test
         }
-
-        const additional_info = _.pick(fullCase, ["additional_info"])
-
-        // const referringDoctor = _.pick(fullCase, ['Name', 'GPClinic', 'LicenseIDGP', 'GPEmail', 'GPPhoneNumber'])
-        const referringDoctor = {
-          Name: "Dr. Dale Lincoln",
-        }
-        const caseListItem = {
-          case_id,
-          parameters,
+        const finalCase = {
+          ...fullCase,
           symptoms,
           signs,
-          investigations,
-          additional_info,
-          referringDoctor,
-          createdAt: "2018-06-6"
-        };
-        output.push(caseListItem);
+          investigations
+        }
+        output.push(finalCase);
       });
 
 
