@@ -43,7 +43,7 @@ module.exports = {
 
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1){
       const patientData = queryResults.rows[0];
-      patientData.DOB = dateNormalizer.offsetTZ(patientData.DOB);
+      patientData.dob = dateNormalizer.offsetTZ(patientData.dob);
       return exits.success({
         authData: patientData,
         error: false,

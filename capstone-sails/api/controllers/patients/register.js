@@ -56,37 +56,38 @@ module.exports = {
       NRIC,
       firstName,
       lastName,
-      DOB,
       gender,
       drugAllergies,
       medicalHistories,
 
     } = inputs;
-    sails.log("GENDER = " + gender)
     const isOverseas = inputs.isOverseas ? inputs.isOverseas :false;
-    // nric, first_name, last_name, dob, allergy, medical_history, gender, is_overseas
+    const dateNormalizer = require('../../services/normalizeDate');
+    const DOB = dateNormalizer.normalize(inputs.DOB);
     const INSERT_PATIENT_QUERY = `
     INSERT INTO patients 
     (patients.nric, patients.first_name, patients.last_name, patients.dob, patients.allergy, patients.medical_history,
-    patients.gender, patients.is_overseas)
+    patients.gender, patients.is_overseas, patients.expo_push_token)
     VALUES 
-    ($1, $2, $3, $4, $5, $6, $7, $8)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     `
     const queryResults = await sails.sendNativeQuery(INSERT_PATIENT_QUERY, [
-      NRIC, firstName, lastName, DOB, drugAllergies, medicalHistories, gender, isOverseas
+      NRIC, firstName, lastName, DOB, drugAllergies, medicalHistories, gender, isOverseas, null
     ]);
-
 
     if (queryResults) {
       const patientData = {
         nric: NRIC,
         first_name: firstName,
         last_name: lastName,
+        dob: DOB,
+        allergy: drugAllergies,
+        medical_history: medicalHistories,
         gender: gender,
-        dob: DOB
       };
-
+      sails.log(JSON.stringify(patientData))
       return exits.success({
+        error: false,
         status: "200 inserted successfully",
         patientData: patientData
       })
@@ -94,7 +95,9 @@ module.exports = {
 
 
     return exits.success({
-      status: "200 failed to insert"
+      errorMessage: "200 failed to insert",
+      error: true,
+
     });
 
   }

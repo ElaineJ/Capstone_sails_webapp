@@ -63,19 +63,20 @@ module.exports = {
       const output = [];
 
       _.forEach(queryPatientCaseRow, function(fullCase) {
+        console.log("FULL CASE" + JSON.stringify(fullCase, null, 2))
         const {
           case_id,
           temperature,
           systole,
           diastole,
-          blood_pressure
+          heart_rate
         } = fullCase
 
         const parameters = {
           Temperature: temperature,
           Systole: systole,
           Diastole: diastole,
-          BP: blood_pressure
+          BP: heart_rate
         }
 
         const symptoms = fullCase.symptoms;
@@ -120,7 +121,7 @@ module.exports = {
           history: output,
           status: '200 OK'
         };
-        sails.log("Returned " + JSON.stringify(payload))
+        sails.log("Returned " + JSON.stringify(payload, null, 2))
         return exits.success({
           ...payload,
           error: false
