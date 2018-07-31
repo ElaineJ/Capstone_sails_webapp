@@ -62,8 +62,34 @@ module.exports = {
       sails.log(JSON.stringify(queryPatientCaseRow, null, 2));
       const output = [];
 
+
+      // for each single case
       _.forEach(queryPatientCaseRow, function(fullCase) {
-        // _.drop(fullCase, ['nric', 'dob'])
+
+        const patient_data = _.pick(fullCase, [
+          'patient_name', 'nric', 'dob', 'allergy', 'medical_history', 'gender'
+        ])
+        // const patient_data = {
+        //   patient_name: fullCase.patient_name,
+        //   nric: fullCase.nric,
+        //   dob: fullCase.dob,
+        //   allergy: fullCase.allergy,
+        //   medical_history:: fullCase.medical_history,
+        //   gender: fullCase.gender
+        // }
+
+        // take the parameters
+
+        const parameters = _.pick(fullCase, [
+          'temperature', 'systole', 'diastole', 'heart_rate'
+        ])
+        // const parameters = {
+        //   temperature: fullCase.temperature,
+        //   systole: fullCase.systole,
+        //   diastole: fullCase.diastole,
+        //   heart_rate: fullCase.heart_rate
+        // }
+
 
         // process symptoms and signs
         const symptoms = _.compact(_.split(fullCase.symptoms_id, ",").map(function(item) {
@@ -73,21 +99,64 @@ module.exports = {
           return parseInt(item, 10);
         }));
 
-        _.drop(fullCase, ['symptoms_id', 'signs_id']);
+        const investigations = _.pick(fullCase, [
+          'full_blood_count', 'ptt', 'uecr', 'liver_function_test'
+        ]);
+        // const investigations = {
+        //   full_blood_count: fullCase.full_blood_count,
+        //   ptt: fullCase.ptt,
+        //   uecr: fullCase.uecr,
+        //   liver_function_test: fullCase.liver_function_test
+        // }
 
-        const investigations = {
-          full_blood_count: fullCase.full_blood_count,
-          ptt: fullCase.ptt,
-          uecr: fullCase.uecr,
-          liver_function_test: fullCase.liver_function_test
-        }
-        const finalCase = {
-          ...fullCase,
+        const additional_info = fullCase.additional_info;
+
+        const gp = _.pick(fullCase, [
+          'gp_name', 'gp_clinic', 'licence_id_gp', 'gp_email', 'gp_contact_number'
+        ]);
+
+        const consultant = _.pick(fullCase, [
+          'consultant_name', 'licence_id_consultant', 'consultant_email', 'consultant_contact_number'
+        ])
+
+        // normalize appointment time
+        const dateNormalizer = require('../../services/normalizeDate');
+        const appointment_time = dateNormalizer.normalizeDateTime(fullCase.appointment_time);
+
+        // pick everything else
+        const {
+          case_id,
+          assigned,
+          created_at,
+          total_severity_score
+        } = fullCase;
+
+        // craft payloadconsultant
+        const payload = {
+          case_id,
+          patient_data,
+          parameters,
           symptoms,
           signs,
-          investigations
+          investigations,
+          additional_info,
+          gp,
+          consultant,
+          assigned,
+          appointment_time,
+          created_at,
+          total_severity_score
+
         }
-        output.push(finalCase);
+
+
+        // const finalCase = {
+        //   ...fullCase,
+        //   symptoms,
+        //   signs,
+        //   investigations
+        // }
+        output.push(payload);
       });
 
 

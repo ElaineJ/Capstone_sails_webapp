@@ -1,6 +1,9 @@
+
+const moment = require('moment');
+const momentTZ = require('moment-timezone');
+
 module.exports = {
   normalize(DOB) {
-    const moment = require('moment');
 
     try {
       return moment(DOB).format('YYYY-MM-DD');
@@ -9,12 +12,14 @@ module.exports = {
     }
   },
   now() {
-    const moment = require('moment');
     return moment().format('YYYY-MM-DD HH:mm:ss');
   },
   offsetTZ(DateTime) {
-    const moment = require('moment-timezone');
-    const converted = moment.tz(DateTime, "Singapore").format('YYYY-MM-DD');
+    const converted = momentTZ.tz(DateTime, "Singapore").format('YYYY-MM-DD');
     return converted
+  },
+
+  normalizeDateTime(dateTime) {
+    return moment(dateTime).format('DD-MMM-YYYY HH:mm:ss')
   }
 }

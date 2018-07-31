@@ -61,7 +61,7 @@ module.exports = {
       medicalHistories,
 
     } = inputs;
-    const isOverseas = inputs.isOverseas ? inputs.isOverseas :false;
+    const isOverseas = inputs.isOverseas ? "Yes" : "No";
     const dateNormalizer = require('../../services/normalizeDate');
     const DOB = dateNormalizer.normalize(inputs.DOB);
     const INSERT_PATIENT_QUERY = `
