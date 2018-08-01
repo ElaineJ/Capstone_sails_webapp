@@ -55,7 +55,7 @@ module.exports.datastores = {
     // url: 'mysql://capstoneAdmin:ConsultantsPW@capstonedb.cuttplbhsdmi.us-east-2.rds.amazonaws.com:3306/Capstone_DB',
 
     // proper RDS
-    url: 'mysql://MasterConsultant:Capstone12!@ncube-core-instance.c1f23absy0yo.ap-southeast-1.rds.amazonaws.com:3306/nCubedDB,
+    url: 'mysql://MasterConsultant:Capstone12!@ncube-core-instance.c1f23absy0yo.ap-southeast-1.rds.amazonaws.com:3306/nCubedDB',
 
     // local RDS
     // url: 'mysql://root:Asdf1234!@localhost:3306/CapstoneDB'

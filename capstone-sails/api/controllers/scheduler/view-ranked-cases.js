@@ -139,14 +139,14 @@ module.exports = {
         // const { email, password, consultantEmail, licenceIdConsultant } = inputs;
 
 
-        const CONSULTANTS_CASES = 'call query_cases()';
+        const CONSULTANTS_CASES = 'call query_appointments()';
         const rawConsultantCases =  await sails.sendNativeQuery(CONSULTANTS_CASES);
 
 
-        const CONSULTANT_QUERY_CASES = ' select * from temp_table_cases' ;
+        const CONSULTANT_QUERY_CASES = ' select * from temp_table_appointments' ;
 
         const rawQueryConsultantCases = await sails.sendNativeQuery(CONSULTANT_QUERY_CASES);
-
+        sails.log(rawQueryConsultantCases.rows);
 
         if (!_.isEmpty(rawQueryConsultantCases.rows)){
           return exits.success({
