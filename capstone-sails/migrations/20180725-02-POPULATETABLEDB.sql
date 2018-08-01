@@ -1,6 +1,6 @@
 -- Seed file to populate DB with mock data for testing
 
-USE Capstone_DB;
+USE nCubedDB;
 
 /* =
    =

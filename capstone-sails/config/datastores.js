@@ -51,9 +51,15 @@ module.exports.datastores = {
 
     adapter: 'sails-mysql',
 
-    //url: 'mysql://capstoneAdmin:ConsultantsPW@capstonedb.cuttplbhsdmi.us-east-2.rds.amazonaws.com:3306/Capstone_DB',
+    // Old free amazon RDS
+    // url: 'mysql://capstoneAdmin:ConsultantsPW@capstonedb.cuttplbhsdmi.us-east-2.rds.amazonaws.com:3306/Capstone_DB',
 
-    url: 'mysql://root:Asdf1234!@localhost:3306/CapstoneDB'
+    // proper RDS
+    url: 'mysql://MasterConsultant:Capstone12!@ncube-core-instance.c1f23absy0yo.ap-southeast-1.rds.amazonaws.com:3306/nCubedDB,
+
+    // local RDS
+    // url: 'mysql://root:Asdf1234!@localhost:3306/CapstoneDB'
+
     //  url: 'mysql://root:password@localhost:3306/CapstoneDB'
 
     //connectTimeout: 20000,

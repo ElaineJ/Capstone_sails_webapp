@@ -1,6 +1,6 @@
 -- Stores procedure needed to query and rank the files
 
-USE CapstoneDB;
+USE nCubedDB;
 
 -- =============== UP ===================
 

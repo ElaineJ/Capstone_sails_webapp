@@ -47,6 +47,7 @@ module.exports = {
     }
 
     sails.log("Successfully captured variables")
+    sails.log("Successfully captured parameters" + JSON.stringify(investigations, null, 2))
 
     // ===================== INSERT NEW CASE RECORD ============
     const randomCaseId = Math.floor(Math.random() * (9999999 - 1000000) + 1000000);
@@ -70,10 +71,10 @@ module.exports = {
         parameters.systole,                                      // systole
         parameters.diastole,                                     // diastole
         parameters.HR,                                           // heart_rate
-        investigations.FBC,                                      // full_blood_count
-        investigations.PTT,                                      // ptt
-        investigations.UECr,                                     // uercr
-        investigations.LFT,                                      // liver_function_test
+        investigations.full_blood_count,                                      // full_blood_count
+        investigations.ptt,                                      // ptt
+        investigations.uecr,                                     // uercr
+        investigations.liver_function_test,                                      // liver_function_test
         null,                                                    // photo
         null,                                                    // pdf
         additionalInfo,                                          // additional_info

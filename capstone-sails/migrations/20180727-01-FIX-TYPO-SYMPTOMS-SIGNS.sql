@@ -1,4 +1,4 @@
-USE CapstoneDB;
+USE nCubedDB;
 UPDATE signs SET sign='McBurneys' WHERE sign='McBurnerys' AND sign_id = 2;
 
 

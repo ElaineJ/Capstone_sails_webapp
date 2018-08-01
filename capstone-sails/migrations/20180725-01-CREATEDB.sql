@@ -1,7 +1,7 @@
 -- Database initialization file
 
--- CREATE DATABASE Capstone_DB;
-USE Capstone_DB;
+CREATE DATABASE nCubedDB;
+USE nCubedDB;
 
 CREATE TABLE users (
 	created_at DATETIME,
