@@ -135,10 +135,13 @@ module.exports = {
 
       const notificationPusher = require("../../services/pushNotification");
       const pushToken = await notificationPusher.getAssociatedPushToken(licenceId, role)
+      
       const message = {
         title: "A new referral",
-        body: "Click to View",
+        body: "Case ID " + randomCaseId,
       }
+
+
       notificationPusher.pushNewNotification(message, pushToken);
 
       return exits.success({

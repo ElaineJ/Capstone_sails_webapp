@@ -1,4 +1,4 @@
-USE CapstoneDB;
+USE nCubedDB;
 
 
 -- =============== UP ===================

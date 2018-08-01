@@ -69,26 +69,14 @@ module.exports = {
         const patient_data = _.pick(fullCase, [
           'patient_name', 'nric', 'dob', 'allergy', 'medical_history', 'gender'
         ])
-        // const patient_data = {
-        //   patient_name: fullCase.patient_name,
-        //   nric: fullCase.nric,
-        //   dob: fullCase.dob,
-        //   allergy: fullCase.allergy,
-        //   medical_history:: fullCase.medical_history,
-        //   gender: fullCase.gender
-        // }
+
 
         // take the parameters
 
         const parameters = _.pick(fullCase, [
           'temperature', 'systole', 'diastole', 'heart_rate'
         ])
-        // const parameters = {
-        //   temperature: fullCase.temperature,
-        //   systole: fullCase.systole,
-        //   diastole: fullCase.diastole,
-        //   heart_rate: fullCase.heart_rate
-        // }
+
 
 
         // process symptoms and signs
@@ -102,12 +90,7 @@ module.exports = {
         const investigations = _.pick(fullCase, [
           'full_blood_count', 'ptt', 'uecr', 'liver_function_test'
         ]);
-        // const investigations = {
-        //   full_blood_count: fullCase.full_blood_count,
-        //   ptt: fullCase.ptt,
-        //   uecr: fullCase.uecr,
-        //   liver_function_test: fullCase.liver_function_test
-        // }
+
 
         const additional_info = fullCase.additional_info;
 
@@ -122,12 +105,12 @@ module.exports = {
         // normalize appointment time
         const dateNormalizer = require('../../services/normalizeDate');
         const appointment_time = dateNormalizer.normalizeDateTime(fullCase.appointment_time);
+        const created_at = dateNormalizer.normalizeDateTime(fullCase.created_at);
 
         // pick everything else
         const {
           case_id,
           assigned,
-          created_at,
           total_severity_score
         } = fullCase;
 
@@ -149,13 +132,6 @@ module.exports = {
 
         }
 
-
-        // const finalCase = {
-        //   ...fullCase,
-        //   symptoms,
-        //   signs,
-        //   investigations
-        // }
         output.push(payload);
       });
 

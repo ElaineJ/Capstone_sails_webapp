@@ -8,25 +8,11 @@ module.exports = {
 
 
   inputs: {
-    email: {
-      description: 'The ID of the user to look up.',
-      type: 'string',
-      required: true
+    identifier: {
+      type: 'string'
     },
-    password: {
-      description: 'a',
-      type: 'string',
-      required: true
-    },
-    GPEmail: {
-      description: 'a',
-      type: 'string',
-      required: true
-    },
-    licenceIdGP: {
-      description: 'licenceID',
-      type: 'string',
-      required: true
+    role: {
+      type: 'string'
     },
 
   },
@@ -50,55 +36,122 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
+    var _ =require('lodash');
 
-    for (var i = 0; i < 4; i += 1) {
-
-      try{
-
-        var _ =require('lodash');
-
-        const { email, password, GPEmail, licenceIdGP } = inputs;
-        //console.log(DOB)
-        const GPS_GET = 'select * from gps WHERE email = \'' + email +'\' AND hashed_password = \''+ password + '\'' ;
-        const rawGP = await sails.sendNativeQuery(GPS_GET);
-        console.log(i);
-
-
-        const GPS_CASES = 'call query_case()';
-        const rawGPCases =  await sails.sendNativeQuery(GPS_CASES);
-
-
-        //const GPS_QUERY_CASES = 'select * patients';
-
-        const GPS_QUERY_CASES = ' select * from querycasetbl WHERE licenceIdGP=\'' + licenceIdGP + '\'AND GPEmail = \''+ GPEmail +' \''  ;
-
-        const rawQueryGPCases = await sails.sendNativeQuery(GPS_QUERY_CASES);
-
-
-        if (!_.isEmpty(rawQueryGPCases.rows)){
-          return exits.success({
-            gp_record: rawGPCases.rows,
-            gp_cases: rawQueryGPCases.rows,
-            status: '200 OK'
-          })
+    const { NRIC } = inputs;
+    const dateNormalizer = require('../../services/normalizeDate');
+    const DOB = dateNormalizer.normalize(inputs.DOB);
 
 
 
-        }
-        return exits.success({
-          status: '200 General Practitioner Not Found'
-        });
+    const PATIENTS_CASES = 'call query_cases()';
+
+
+    const GP_QUERY_CASES = 'select * from temp_table_cases WHERE licence_id_gp=\'' + inputs.identifier + '\'';
+    const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
+    const rawQueryGPCases = await sails.sendNativeQuery(GP_QUERY_CASES);
+
+
+
+    const queryGPCaseRow = rawQueryGPCases.rows;
+
+    sails.log(JSON.stringify(queryGPCaseRow, null, 2));
+    const output = [];
+
+
+    // for each single case
+    _.forEach(queryGPCaseRow, function(fullCase) {
+
+      const patient_data = _.pick(fullCase, [
+        'patient_name', 'nric', 'dob', 'allergy', 'medical_history', 'gender'
+      ])
+
+
+      // take the parameters
+
+      const parameters = _.pick(fullCase, [
+        'temperature', 'systole', 'diastole', 'heart_rate'
+      ])
+
+
+
+      // process symptoms and signs
+      const symptoms = _.compact(_.split(fullCase.symptoms_id, ",").map(function(item) {
+        return parseInt(item, 10);
+      }));
+      const signs = _.compact(_.split(fullCase.signs_id, ",").map(function(item) {
+        return parseInt(item, 10);
+      }));
+
+      const investigations = _.pick(fullCase, [
+        'full_blood_count', 'ptt', 'uecr', 'liver_function_test'
+      ]);
+
+
+      const additional_info = fullCase.additional_info;
+
+      const gp = _.pick(fullCase, [
+        'gp_name', 'gp_clinic', 'licence_id_gp', 'gp_email', 'gp_contact_number'
+      ]);
+
+      const consultant = _.pick(fullCase, [
+        'consultant_name', 'licence_id_consultant', 'consultant_email', 'consultant_contact_number'
+      ])
+
+      // normalize appointment time
+      const dateNormalizer = require('../../services/normalizeDate');
+      const appointment_time = dateNormalizer.normalizeDateTime(fullCase.appointment_time);
+      const created_at = dateNormalizer.normalizeDateTime(fullCase.created_at);
+
+      // pick everything else
+      const {
+        case_id,
+        assigned,
+        total_severity_score
+      } = fullCase;
+
+      // craft payloadconsultant
+      const payload = {
+        case_id,
+        patient_data,
+        parameters,
+        symptoms,
+        signs,
+        investigations,
+        additional_info,
+        gp,
+        consultant,
+        assigned,
+        appointment_time,
+        created_at,
+        total_severity_score
 
       }
-      catch(err){
-        console.log(err);
-        return exits.success();
 
-      }
+      output.push(payload);
+    });
 
 
-    }}
+    if (!_.isEmpty(output)){
+      const payload = {
+        history: output,
+        status: '200 OK'
+      };
+      sails.log("Returned " + JSON.stringify(payload, null, 2))
+      return exits.success({
+        ...payload,
+        error: false
+      })
+
+    }
+    return exits.success({
+      error: true,
+      errorMessage: '200 No cases found'
+    });
 
 
 
+
+
+  }
 };
