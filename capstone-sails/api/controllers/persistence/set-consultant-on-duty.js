@@ -14,7 +14,7 @@ module.exports = {
     push_token: {
       type: 'string'
     },
-    status: {
+    advice: {
       type: 'string'
     }
   },
@@ -29,7 +29,7 @@ module.exports = {
     const {
       license_id_consultant,
       push_token,
-      status
+      advice
     } = inputs;
 
     const POST_QUERY = 'INSERT INTO persistence ' +
@@ -37,7 +37,7 @@ module.exports = {
       'values ($1, $2, $3)'
 
     const GET_QUERY = 'SELECT * FROM consultants WHERE licence_id_consultant = $1';
-    const result = await sails.sendNativeQuery(POST_QUERY, [status, license_id_consultant, push_token]);
+    const result = await sails.sendNativeQuery(POST_QUERY, [advice, license_id_consultant, push_token]);
 
     const returnResult = await sails.sendNativeQuery(GET_QUERY, [license_id_consultant]);
     const returnPayload = {
