@@ -68,7 +68,7 @@ module.exports = {
       const queryResults = await sails.sendNativeQuery(query);
 
       const pushToken = queryResults.rows;
-
+      sails.log.info("Push token are " + pushToken);
       this.batchPushNotifications(message, pushToken);
   },
 
@@ -93,7 +93,9 @@ module.exports = {
 
     function callback(error, response, body) {
       if (!error && response.statusCode === 200) {
+        sails.log.info("Success")
       }
+      sails.log.error("Failed to push" + error)
     }
 
     request(mergedConfig, callback);

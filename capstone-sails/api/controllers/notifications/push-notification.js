@@ -34,7 +34,7 @@ module.exports = {
       title: title,
         body: body
     };
-
+    sails.log.info(nric, message + "");
     const notificationPusher = require("../../services/pushNotification");
     notificationPusher.pushAllConsultants(message);
 
