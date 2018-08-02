@@ -26,5 +26,6 @@ module.exports.policies = {
   'notifications/*': true,
   'scheduler/*':true,
   'persistence/*': true,
+  'advice/*': true,
 
 };
