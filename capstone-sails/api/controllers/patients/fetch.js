@@ -42,8 +42,8 @@ module.exports = {
 
     const queryResults = await sails.sendNativeQuery(PATIENTS_GET);
 
-
-    if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1) {
+    sails.log.info(queryResults.rows[0])
+    if (!_.isEmpty(queryResults.rows)) {
       const patientData = queryResults.rows[0];
       return exits.success({
         patientData: patientData,
