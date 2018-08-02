@@ -16,9 +16,11 @@ module.exports = {
     },
     body: {
       type: 'string'
-    }
+    },
+  case_id: {
+    type: 'string'
+  }
   },
-
 
   exits: {
 

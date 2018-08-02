@@ -79,9 +79,9 @@ module.exports = {
         null,                                                    // pdf
         additionalInfo,                                          // additional_info
         false,                                                   // assigned
-        now,                                                     // asigned_time
+        now,                                                     // assigned_time
         role === 'consultant' ? licenceId : null,                // licence_id_consultant
-        now                                                      // appointment_time
+        null                                                      // appointment_time
       ])
 
       sails.log("successfully created case" + JSON.stringify(rawResult, null, 2));
@@ -143,6 +143,9 @@ module.exports = {
       const message = {
         title: "A new referral",
         body: "Case ID " + randomCaseId,
+        data: {
+          case_id: randomCaseId
+        }
       }
 
 

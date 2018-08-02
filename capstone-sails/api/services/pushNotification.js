@@ -45,6 +45,7 @@ module.exports = {
       to: to,
       title: message.title,
       body: message.body,
+      data: message.data,
     }
 
 
@@ -81,10 +82,11 @@ module.exports = {
         to: sendTo,
         title: message.title,
         body: message.body,
+        data: message.data,
       }
 
       messageList.push(messageContent)
-    })
+    });
 
     var mergedConfig = {
       ...config,

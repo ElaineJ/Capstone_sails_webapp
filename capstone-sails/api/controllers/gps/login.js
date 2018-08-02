@@ -43,7 +43,9 @@ module.exports = {
     const queryResults = await sails.sendNativeQuery(GPS_LOGIN);
 
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1) {
-      const gpData = _.drop(queryResults.rows[0], ['hashed_password']);
+      const gpData = _.omit(queryResults.rows[0], ['hashed_password']);
+      sails.log.info("QREGASSULT" + JSON.stringify(gpData, null, 2))
+
       sails.log("GP logged in " + gpData);
       return exits.success({
         authData: { ...gpData, role: 'gp' },

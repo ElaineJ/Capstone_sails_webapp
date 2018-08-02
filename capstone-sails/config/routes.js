@@ -83,6 +83,7 @@ module.exports.routes = {
   'POST /api/v1/consultants/register': { action: 'consultants/register' },
 
   // referrals
+  'GET /api/v1/referral/get': { action: 'referral/get' },
   'POST /api/v1/referral/submit': { action: 'referral/submit' },
 
   'GET /api/v1/gps/get': { action: 'gps/get' },
