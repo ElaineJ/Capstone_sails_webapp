@@ -79,7 +79,14 @@ module.exports = {
     let messageList = [];
 
     _.forEach(toList, function(sendTo) {
+      function callback(error, response, body) {
+        if (!error && response.statusCode === 200) {
+          sails.log.info("Success")
+        }
 
+        sails.log.info("body is" + JSON.stringify(body, null, 2));
+        return response;
+      }
       const messageContent = {
         ...defaultFormat,
         to: sendTo,
@@ -87,27 +94,24 @@ module.exports = {
         body: message.body,
         data: message.data,
       }
-      messageList.push(messageContent)
+      const mergedConfig = {
+        ...config,
+        body: messageContent
+      }
+
+      request(mergedConfig, callback);
+      //messageList.push(messageContent)
     });
 
 
-    var mergedConfig = {
-      ...config,
-      body: messageList
-    }
+    // const mergedConfig = {
+    //   ...config,
+    //   body: messageList
+    // }
 
 
     sails.log.info("PUSHES" + JSON.stringify(messageList, null, 2));
-    function callback(error, response, body) {
-      if (!error && response.statusCode === 200) {
-        sails.log.info("Success")
-      }
-
-      sails.log.info("body is" + JSON.stringify(body, null, 2));
-      return response;
-    }
-
-    request(mergedConfig, callback);
+    // request(mergedConfig, callback);
   }
 }
 
