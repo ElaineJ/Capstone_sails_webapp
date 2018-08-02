@@ -34,9 +34,11 @@ module.exports = {
     const DOB = dateNormalizer.normalize(inputs.DOB);
 
     console.log("DOB IS" + DOB);
+
     const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
     const queryResults = await sails.sendNativeQuery(PATIENTS_GET);
 
+    console.log("Query resylts = " + JSON.stringify(queryResults.rows, null, 2))
 
 
     // sails.log("QUERY RESULT" + JSON.stringify(queryResults.rows[0], null, 2));
