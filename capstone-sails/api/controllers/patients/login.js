@@ -36,8 +36,7 @@ module.exports = {
     const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
     const queryResults = await sails.sendNativeQuery(PATIENTS_GET);
 
-    //const mailgunService = require("../../services/mailgunService");
-    //mailgunService.sendEmail();
+
 
     // sails.log("QUERY RESULT" + JSON.stringify(queryResults.rows[0], null, 2));
 

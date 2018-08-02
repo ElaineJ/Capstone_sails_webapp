@@ -96,6 +96,10 @@ module.exports.routes = {
   'GET /api/v1/advice/get': { action: 'advice/get' },
   'POST /api/v1/advice/set': { action: 'advice/set' },
 
+  // messenger
+  'POST /api/v1/messenger/post': { action: 'messenger/post' },
+  'GET /api/v1/messenger/fetch': { action: 'messenger/fetch' },
+  'GET /api/v1/messenger/list': { action: 'messenger/list' },
 
 
   // notifications

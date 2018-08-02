@@ -149,8 +149,13 @@ module.exports = {
       }
 
 
+
       notificationPusher.pushNewNotification(message, pushToken);
       notificationPusher.pushAllConsultants(message);
+
+      const mailgunService = require("../../services/mailgunService");
+      mailgunService.sendEmail("elaine_cheong@mymail.sutd.edu.sg");
+
       return exits.success({
         error: false,
         caseId: randomCaseId

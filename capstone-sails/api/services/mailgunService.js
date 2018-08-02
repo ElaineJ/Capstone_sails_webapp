@@ -1,5 +1,5 @@
 module.exports = {
-  async sendEmail() {
+  async sendEmail(to) {
     // old credentials
     //var api_key = '3e9a4ace00f9fe15d93feb40f93974b1-3b1f59cf-0a254f7b';
     //var DOMAIN = 'sandbox2f2fbd8bd1ce44989f20b455e3150168.mailgun.org';
@@ -11,7 +11,7 @@ module.exports = {
 
     var data = {
       from: 'Excited User <me@samples.mailgun.org>',
-      to: 'null@test.com',
+      to: to,
       subject: 'Hello',
       text: 'Testing some Mailgun awesomness!'
     };
