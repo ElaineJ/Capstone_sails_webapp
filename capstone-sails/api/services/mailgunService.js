@@ -10,10 +10,10 @@ module.exports = {
     var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
 
     var data = {
-      from: 'Excited User <me@samples.mailgun.org>',
+      from: 'Bob <bob@samples.mailgun.org>',
       to: 'null@test.com',
-      subject: 'Hello',
-      text: 'Testing some Mailgun awesomness!'
+      subject: 'Advice for Child with Constipation',
+      text: 'My Child had not being going to the toilet for three days. He had eaten many bananas too!'
     };
 
     mailgun.messages().send(data, function (error, body) {
