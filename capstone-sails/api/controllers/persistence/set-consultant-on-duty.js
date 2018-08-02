@@ -14,7 +14,7 @@ module.exports = {
     push_token: {
       type: 'string'
     },
-    advice: {
+    status: {
       type: 'string'
     }
   },
@@ -27,19 +27,22 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     const {
-      license_id_consultant,
+      licence_id_consultant,
       push_token,
-      advice
+      status
     } = inputs;
+    sails.log.info("Licence" + licence_id_consultant);
+    sails.log.info(push_token)
+    sails.log.info(status)
 
     const POST_QUERY = 'INSERT INTO persistence ' +
       '(persistence.is_consultant_on_duty, persistence.licence_id_consultant, persistence.expo_push_token)' +
       'values ($1, $2, $3)'
 
     const GET_QUERY = 'SELECT * FROM consultants WHERE licence_id_consultant = $1';
-    const result = await sails.sendNativeQuery(POST_QUERY, [advice, license_id_consultant, push_token]);
+    const result = await sails.sendNativeQuery(POST_QUERY, [status, licence_id_consultant, push_token]);
 
-    const returnResult = await sails.sendNativeQuery(GET_QUERY, [license_id_consultant]);
+    const returnResult = await sails.sendNativeQuery(GET_QUERY, [licence_id_consultant]);
     const returnPayload = {
       is_consultant_on_duty: true,
       consultant_on_duty: returnResult.rows[0]
