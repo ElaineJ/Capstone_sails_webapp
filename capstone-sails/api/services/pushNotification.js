@@ -71,6 +71,7 @@ module.exports = {
 
       this.batchPushNotifications(message, pushToken);
   },
+
   batchPushNotifications(message, toList) {
     let messageList = []
 
