@@ -26,9 +26,9 @@ module.exports = {
     const PATIENTS_CASES = 'call query_notifications()';
 
 
-    const CASE_QUERY_CASES = 'select * from temp_table_notifications';
+    const CASE_QUERY_CASES = 'select * from temp_table_notifications WHERE case_id=$1';
     const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
-    const result = await sails.sendNativeQuery(CASE_QUERY_CASES)
+    const result = await sails.sendNativeQuery(CASE_QUERY_CASES, [case_id])
 
     if (!_.isEmpty(result.rows)) {
       return exits.success({

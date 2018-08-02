@@ -92,7 +92,7 @@ module.exports.routes = {
   'GET /api/v1/consultants/list': { action: 'consultants/list' },
 
   // advice
-  'GET /api/v1/advice/fetch': { action: 'advice/fetch' },
+  'GET /api/v1/advice/list': { action: 'advice/list' },
   'GET /api/v1/advice/get': { action: 'advice/get' },
   'POST /api/v1/advice/set': { action: 'advice/set' },
 
