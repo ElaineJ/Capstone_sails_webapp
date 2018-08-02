@@ -71,7 +71,6 @@ module.exports.routes = {
 
 
 
-
   // GPs
   'POST /api/v1/gps/login': { action: 'gps/login' },
   'POST /api/v1/gps/register': { action: 'gps/register' },
@@ -96,7 +95,14 @@ module.exports.routes = {
   'POST /api/v1/notifications/push-token': { action: 'notifications/push-token' },
   'POST /api/v1/notifications/push-notification': { action: 'notifications/push-notification' },
 
+  // State persistence
+  'GET /api/v1/persistence/get-consultant-on-duty': { action: 'persistence/get-consultant-on-duty' },
+  'POST /api/v1/persistence/set-consultant-on-duty': { action: 'persistence/set-consultant-on-duty' },
+  'GET /api/v1/persistence/get-assigned-consultant': { action: 'persistence/get-assigned-consultant' },
+  'POST /api/v1/persistence/set-assigned-consultant': { action: 'persistence/set-assigned-consultant' },
 
+
+  // query cases
   'GET /api/v1/querycases/get': { action: 'querycases/get' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

@@ -62,7 +62,16 @@ module.exports = {
 
 
   },
-  batchPushNotifications(message, [toList]) {
+
+  async pushAllConsultants(message) {
+      const query = 'SELECT expo_push_token FROM consultants';
+      const queryResults = await sails.sendNativeQuery(query);
+
+      const pushToken = queryResults.rows;
+
+      this.batchPushNotifications(message, pushToken);
+  },
+  batchPushNotifications(message, toList) {
     let messageList = []
 
     _.forEach(toList, function(sendTo) {

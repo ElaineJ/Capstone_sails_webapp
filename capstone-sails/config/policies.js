@@ -25,5 +25,6 @@ module.exports.policies = {
   'register-provider': true,
   'notifications/*': true,
   'scheduler/*':true,
+  'persistence/*': true,
 
 };

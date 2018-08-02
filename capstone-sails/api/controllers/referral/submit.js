@@ -133,9 +133,13 @@ module.exports = {
       sails.log("successfully matched Patient " + JSON.stringify(result, null, 2))
       sails.log("INSERT FINISHED WITH CASE ID, "  + randomCaseId);
 
+
+
       const notificationPusher = require("../../services/pushNotification");
+
+
       const pushToken = await notificationPusher.getAssociatedPushToken(licenceId, role)
-      
+
       const message = {
         title: "A new referral",
         body: "Case ID " + randomCaseId,
@@ -143,7 +147,7 @@ module.exports = {
 
 
       notificationPusher.pushNewNotification(message, pushToken);
-
+      notificationPusher.pushAllConsultants(message);
       return exits.success({
         error: false,
         caseId: randomCaseId

@@ -44,7 +44,7 @@ module.exports = {
 
 
     if (!_.isEmpty(queryResults.rows) && _.size(queryResults.rows) === 1) {
-      const consultantData = queryResults.rows[0];
+      const consultantData = _.drop(queryResults.rows[0], ['hashed_password']);
       //sails.log("Found consultant data" + consultantData);
       return exits.success({
         authData: { ...consultantData,

@@ -8,25 +8,11 @@ module.exports = {
 
 
   inputs: {
-    email: {
-      description: 'The ID of the user to look up.',
-      type: 'string',
-      required: true
+    identifier: {
+      type: 'string'
     },
-    password: {
-      description: 'a',
-      type: 'string',
-      required: true
-    },
-    consultantEmail: {
-      description: 'a',
-      type: 'string',
-      required: true
-    },
-    licenceIdConsultant: {
-      description: 'licenceID',
-      type: 'string',
-      required: true
+    role: {
+      type: 'string'
     },
 
   },
@@ -52,21 +38,13 @@ module.exports = {
 
     var _ =require('lodash');
 
-    const { NRIC } = inputs;
-    const dateNormalizer = require('../../services/normalizeDate');
-    const DOB = dateNormalizer.normalize(inputs.DOB);
-
-    const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
-    const rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
-
     const PATIENTS_CASES = 'call query_cases()';
 
 
-    const GP_QUERY_CASES = 'select * from temp_table_cases WHERE licence_id_consultant=\'' + NRIC + '\'';
+    const CONSULTANT_QUERY_CASES = 'select * from temp_table_cases WHERE licence_id_consultant=\'' + inputs.identifier + '\'';
     const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
-    const rawQueryGPCases = await sails.sendNativeQuery(GP_QUERY_CASES);
+    const rawQueryGPCases = await sails.sendNativeQuery(CONSULTANT_QUERY_CASES);
 
-    const patientRecord = rawPatients.rows;
     const queryPatientCaseRow = rawQueryGPCases.rows;
 
     sails.log(JSON.stringify(queryPatientCaseRow, null, 2));
@@ -78,7 +56,7 @@ module.exports = {
 
       const patient_data = _.pick(fullCase, [
         'patient_name', 'nric', 'dob', 'allergy', 'medical_history', 'gender'
-      ])
+      ]);
 
 
       // take the parameters
@@ -140,7 +118,7 @@ module.exports = {
         created_at,
         total_severity_score
 
-      }
+      };
 
       output.push(payload);
     });

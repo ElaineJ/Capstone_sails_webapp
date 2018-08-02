@@ -4,12 +4,12 @@ module.exports = {
   friendlyName: 'list',
 
 
-  description: 'list gps.',
+  description: 'list patients cases.',
 
 
   inputs: {
-    NRIC: {
-      description: 'The ID of the user to look up.',
+    identifier: {
+      description: 'The NRIC of the user to look up.',
       type: 'string',
       //required: true
     },
@@ -42,11 +42,11 @@ module.exports = {
 
       var _ =require('lodash');
 
-      const { NRIC } = inputs;
+      const { identifier } = inputs;
       const dateNormalizer = require('../../services/normalizeDate');
       const DOB = dateNormalizer.normalize(inputs.DOB);
 
-      const PATIENTS_GET = 'select * from patients WHERE nric = \'' + NRIC +'\' AND dob = \''+ DOB + '\'' ;
+      const PATIENTS_GET = 'select * from patients WHERE nric = \'' + identifier +'\' AND dob = \''+ DOB + '\'' ;
       const rawPatients = await sails.sendNativeQuery(PATIENTS_GET);
 
       const PATIENTS_CASES = 'call query_cases()';
