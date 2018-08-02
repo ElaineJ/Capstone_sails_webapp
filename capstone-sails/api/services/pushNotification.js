@@ -10,7 +10,7 @@ const config= {
   json: true,
   gzip: true,
   headers: {
-    accept: 'application/json',
+    accept: 'application/json'
   },
 }
 const request = require('request');
@@ -72,13 +72,14 @@ module.exports = {
       const pushTokenArray = _.map(pushTokenRaw, 'expo_push_token')
       const cleanedPushTokenArray = _.compact(pushTokenArray)
       sails.log.info("Push token are " + JSON.stringify(cleanedPushTokenArray));
-      this.batchPushNotifications(message, cleanedPushTokenArray);
+      return this.batchPushNotifications(message, cleanedPushTokenArray);
   },
 
   batchPushNotifications(message, toList) {
-    let messageList = []
+    let messageList = [];
 
     _.forEach(toList, function(sendTo) {
+
       const messageContent = {
         ...defaultFormat,
         to: sendTo,
@@ -86,9 +87,9 @@ module.exports = {
         body: message.body,
         data: message.data,
       }
-
       messageList.push(messageContent)
     });
+
 
     var mergedConfig = {
       ...config,
@@ -101,6 +102,9 @@ module.exports = {
       if (!error && response.statusCode === 200) {
         sails.log.info("Success")
       }
+
+      sails.log.info("body is" + JSON.stringify(body, null, 2));
+      return response;
     }
 
     request(mergedConfig, callback);
