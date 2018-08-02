@@ -36,8 +36,8 @@ module.exports = {
     const INSERT_NOTE = 'INSERT INTO notifications VALUES($1, $2, $3, $4)';
     const INSERT_CASE_NOTE = 'INSERT INTO case_notifications VALUES($1, $2)';
 
-    const result = await sails.sendNativeQuery(INSERT_CASE_NOTE, [case_id, randomCaseId])
     const rawPatientCases =  await sails.sendNativeQuery(INSERT_NOTE, [randomCaseId, licence_id_consultant, advice, dateNormalizer.now()]);
+    const result = await sails.sendNativeQuery(INSERT_CASE_NOTE, [case_id, randomCaseId])
 
 
     if (!_.isEmpty(result.rows)) {
