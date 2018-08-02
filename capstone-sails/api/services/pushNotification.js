@@ -68,9 +68,11 @@ module.exports = {
       const query = 'SELECT expo_push_token FROM consultants';
       const queryResults = await sails.sendNativeQuery(query);
 
-      const pushToken = queryResults.rows;
-      sails.log.info("Push token are " + pushToken);
-      this.batchPushNotifications(message, pushToken);
+      const pushTokenRaw = queryResults.rows;
+      const pushTokenArray = _.map(pushTokenRaw, 'expo_push_token')
+      const cleanedPushTokenArray = _.compact(pushTokenArray)
+      sails.log.info("Push token are " + JSON.stringify(cleanedPushTokenArray));
+      this.batchPushNotifications(message, cleanedPushTokenArray);
   },
 
   batchPushNotifications(message, toList) {
@@ -93,11 +95,12 @@ module.exports = {
       body: messageList
     }
 
+
+    sails.log.info("PUSHES" + JSON.stringify(messageList, null, 2));
     function callback(error, response, body) {
       if (!error && response.statusCode === 200) {
         sails.log.info("Success")
       }
-      sails.log.error("Failed to push" + error)
     }
 
     request(mergedConfig, callback);

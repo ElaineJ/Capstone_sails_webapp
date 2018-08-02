@@ -52,7 +52,7 @@ module.exports = {
       const PATIENTS_CASES = 'call query_cases()';
 
 
-      const PATIENTS_QUERY_CASES = 'select * from temp_table_cases WHERE nric=\'' + NRIC + '\'';
+      const PATIENTS_QUERY_CASES = 'select * from temp_table_cases WHERE nric=\'' + identifier + '\'';
       const rawPatientCases =  await sails.sendNativeQuery(PATIENTS_CASES);
       const rawQueryPatientCases = await sails.sendNativeQuery(PATIENTS_QUERY_CASES);
 

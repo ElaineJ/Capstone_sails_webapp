@@ -27,17 +27,17 @@ module.exports = {
     const result = await sails.sendNativeQuery(GET_QUERY, [nric])
 
 
-    sails.log("result row is not empty" + JSON.stringify(result.rows[0]))
+    // sails.log("result row is not empty" + JSON.stringify(result.rows[0]))
 
     if (!_.isEmpty(result.rows)) {
       const referencedLicenceId = result.rows[0].licence_id_consultant
       const GET_CONSULTANT = 'SELECT * FROM consultants WHERE licence_id_consultant = $1';
       const consultantResult = await sails.sendNativeQuery(GET_CONSULTANT, [referencedLicenceId]);
-      sails.log("Consultant result row is not empty" + consultantResult.rows)
+      // sails.log("Consultant result row is not empty" + consultantResult.rows)
       if (!_.isEmpty(consultantResult.rows)) {
         const assigned_consultant = _.pick(consultantResult.rows[0],
           ['first_name', 'last_name', 'licence_id_consultant'])
-        sails.log("returning true" + JSON.stringify(assigned_consultant));
+        // sails.log("returning true" + JSON.stringify(assigned_consultant));
 
         return exits.success({
           error: false,
