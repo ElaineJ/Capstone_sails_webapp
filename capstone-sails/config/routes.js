@@ -91,6 +91,12 @@ module.exports.routes = {
   'GET /api/v1/consultants/get': { actions: 'consultants/get' },
   'GET /api/v1/consultants/list': { action: 'consultants/list' },
 
+  // advice
+  'GET /api/v1/advice/fetch': { action: 'advice/fetch' },
+  'GET /api/v1/advice/get': { action: 'advice/get' },
+  'POST /api/v1/advice/set': { action: 'advice/set' },
+
+
 
   // notifications
   'POST /api/v1/notifications/push-token': { action: 'notifications/push-token' },

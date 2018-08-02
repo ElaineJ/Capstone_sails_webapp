@@ -1,4 +1,5 @@
 
+USE nCubedDB;
 -- ---------------------------------- NOTIFICATION QUERY ---------------------------------------------
 DROP PROCEDURE IF EXISTS query_notifications;
 delimiter $$
@@ -74,3 +75,4 @@ delimiter ;
 
 -- call query_notifications();
 -- select * from temp_table_notifications
+

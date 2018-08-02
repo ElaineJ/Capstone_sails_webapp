@@ -141,8 +141,8 @@ module.exports = {
       const pushToken = await notificationPusher.getAssociatedPushToken(licenceId, role)
 
       const message = {
-        title: "A new referral",
-        body: "Case ID " + randomCaseId,
+        title: "A new referral. #" + randomCaseId,
+        body: "Please view from the app",
         data: {
           case_id: randomCaseId
         }
