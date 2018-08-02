@@ -73,6 +73,8 @@ END $$
 
 delimiter ;
 
--- call query_notifications();
--- select * from temp_table_notifications
+call query_notifications();
+select * from temp_table_notifications;
+
+SELECT * FROM persistence ORDER BY loggedTime DESC LIMIT 1;
 
