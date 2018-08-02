@@ -60,7 +60,7 @@ module.exports.datastores = {
     // local RDS
     // url: 'mysql://root:Asdf1234!@localhost:3306/CapstoneDB'
 
-    //  url: 'mysql://root:password@localhost:3306/CapstoneDB'
+    // url: 'mysql://root:password@localhost:3306/CapstoneDB'
 
     //connectTimeout: 20000,
 
