@@ -35,7 +35,7 @@ module.exports = {
     sails.log.info(push_token)
     sails.log.info(status)
 
-    const value = status ? 1 : 0
+    const value = (status === true) ? 1 : 0;
     const POST_QUERY = 'INSERT INTO persistence ' +
       '(persistence.is_consultant_on_duty, persistence.licence_id_consultant, persistence.expo_push_token) ' +
       'VALUES ($1, $2, $3)'
