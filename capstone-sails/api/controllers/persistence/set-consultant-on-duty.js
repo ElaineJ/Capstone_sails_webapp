@@ -44,7 +44,7 @@ module.exports = {
 
     const returnResult = await sails.sendNativeQuery(GET_QUERY, [licence_id_consultant]);
     const returnPayload = {
-      is_consultant_on_duty: true,
+      is_consultant_on_duty: status,
       consultant_on_duty: returnResult.rows[0]
     }
 

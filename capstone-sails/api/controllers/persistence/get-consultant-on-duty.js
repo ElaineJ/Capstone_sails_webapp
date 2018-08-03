@@ -28,6 +28,7 @@ module.exports = {
     if (!_.isEmpty(result.rows)){
       console.log(result.rows)
       if (result.rows[0].is_consultant_on_duty === 1) {
+        sails.log.info("Consultant is on duty")
         const assigned = result.rows[0]
         return exits.success({
           is_consultant_on_duty: true,
@@ -36,6 +37,8 @@ module.exports = {
         })
 
       } else if (result.rows[0].is_consultant_on_duty === 0){
+        sails.log.info("Consultant is off duty")
+
         return exits.success({
           consultant_on_duty: null,
           is_consultant_on_duty: false,
