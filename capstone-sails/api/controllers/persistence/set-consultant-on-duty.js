@@ -36,22 +36,26 @@ module.exports = {
     sails.log.info(status)
 
     const POST_QUERY = 'INSERT INTO persistence ' +
-      '(persistence.is_consultant_on_duty, persistence.licence_id_consultant, persistence.expo_push_token)' +
-      'values ($1, $2, $3)'
+      '(persistence.loggedTime, persistence.is_consultant_on_duty, persistence.licence_id_consultant, persistence.expo_push_token)' +
+      'values ($1, $2, $3, $4)'
 
     const GET_QUERY = 'SELECT * FROM consultants WHERE licence_id_consultant = $1';
-    const result = await sails.sendNativeQuery(POST_QUERY, [status, licence_id_consultant, push_token]);
+    const result = await sails.sendNativeQuery(POST_QUERY, [null, status, licence_id_consultant, push_token]);
 
     const returnResult = await sails.sendNativeQuery(GET_QUERY, [licence_id_consultant]);
-    const returnPayload = {
-      is_consultant_on_duty: status,
-      consultant_on_duty: returnResult.rows[0]
+    if (!_.isEmpty(returnResult.rows)) {
+      return exits.success({
+        is_consultant_on_duty: status,
+        consultant_on_duty: returnResult.rows[0],
+        error: false,
+      });
     }
-
     return exits.success({
-        ...returnPayload,
+      is_consultant_on_duty: false,
       error: false,
     });
+
+
 
   }
 
