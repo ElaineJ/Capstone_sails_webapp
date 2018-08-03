@@ -35,12 +35,13 @@ module.exports = {
     sails.log.info(push_token)
     sails.log.info(status)
 
+    const value = status ? 1 : 0
     const POST_QUERY = 'INSERT INTO persistence ' +
-      '(persistence.is_consultant_on_duty, persistence.licence_id_consultant, persistence.expo_push_token)' +
-      'values ($1, $2, $3)'
+      '(persistence.is_consultant_on_duty, persistence.licence_id_consultant, persistence.expo_push_token) ' +
+      'VALUES ($1, $2, $3)'
 
     const GET_QUERY = 'SELECT * FROM consultants WHERE licence_id_consultant = $1';
-    const result = await sails.sendNativeQuery(POST_QUERY, [status, licence_id_consultant, push_token]);
+    const result = await sails.sendNativeQuery(POST_QUERY, [value, licence_id_consultant, push_token]);
 
     const returnResult = await sails.sendNativeQuery(GET_QUERY, [licence_id_consultant]);
 
