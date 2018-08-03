@@ -78,6 +78,8 @@ module.exports = {
   batchPushNotifications(message, toList) {
     let messageList = [];
 
+
+
     _.forEach(toList, function(sendTo) {
       function callback(error, response, body) {
         if (!error && response.statusCode === 200) {

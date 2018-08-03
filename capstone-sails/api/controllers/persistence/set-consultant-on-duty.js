@@ -49,7 +49,7 @@ module.exports = {
     }
 
     return exits.success({
-      returnPayload,
+        ...returnPayload,
       error: false,
     });
 
