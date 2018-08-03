@@ -15,7 +15,7 @@ module.exports = {
       type: 'string'
     },
     status: {
-      type: 'string'
+      type: 'boolean'
     }
   },
 
